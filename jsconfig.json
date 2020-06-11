@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "system",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "rootDirs": ["./"],
+    "paths": {
+      "@Store": ["./src/store"],
+      "@Server/*": ["./server/*"],
+      "@Componnents/*": ["./src/components/*"],
+      "@Config": ["./src/config"],
+      "@Utils/*": ["./src/utils/*"],
+      "@Actions/*": ["./src/actions/*"],
+      "@Reducers/*": ["./src/reducers/*"]
+    }
+  }
+}

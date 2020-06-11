@@ -1,0 +1,25 @@
+{
+  "presets": [
+    "next/babel"
+  ],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": [
+          "./"
+        ],
+        "alias": {
+          "@": "./",
+          "@Server/*": "./server/*",
+          "@Components/*": "./src/components/*",
+          "@Utils/*": "./src/utils/*",
+          "@Actions/*": "./src/actions/*",
+          "@Reducers/*": "./src/reducers/*",
+          "@Store": "./src/store",
+          "@Config": "./src/config",
+        }
+      }
+    ]
+  ]
+}
