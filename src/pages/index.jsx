@@ -4,6 +4,7 @@ import { useSelector, shallowEqual } from 'react-redux';
 import CenterBlock from '@Componnents/Base/CenterBlock';
 import HomeCategory from '@Componnents/Home/Category';
 import HomeHotTopics from '@Componnents/Home/HotTopics';
+import HomeContributes from '@Componnents/Home/Contributes';
 
 import HomeAction from '@Actions/home';
 
@@ -17,6 +18,7 @@ const HomePage = () => {
 
   const category = homeData.get('category');
   const hotTopic = homeData.get('hot_topic');
+  const latestContribute = homeData.get('latest_contribute');
 
   return (
     <CenterBlock>
@@ -28,6 +30,10 @@ const HomePage = () => {
         />
         <HomeHotTopics
           data={hotTopic}
+          categoryId={categoryId}
+        />
+        <HomeContributes
+          data={latestContribute}
           categoryId={categoryId}
         />
       </>

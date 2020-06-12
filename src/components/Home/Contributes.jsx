@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
 
 import ModuleTilt from '@Componnents/Base/ModuleTitle';
-import TopicWrapper from '@Componnents/Base/TopicWrapper';
+import ContributeWrapper from '@Componnents/Base/ContributeWrapper';
 
-const HotTopics = props => {
+const Contributes = props => {
   const { data, categoryId } = props;
   const [categoryName, setCategoryName] = useState(undefined);
   const categorys = useSelector(state => state.getIn(['home', 'data', 'category']), shallowEqual);
@@ -24,18 +24,18 @@ const HotTopics = props => {
 
   return (
     <>
-      <ModuleTilt color>
-        Hot Topics
+      <ModuleTilt>
+        Lastest Contribute
         {categoryName && <small>{categoryName}</small>}
       </ModuleTilt>
-      <TopicWrapper data={data} />
+      <ContributeWrapper data={data} />
     </>
   );
 };
 
-HotTopics.propTypes = {
+Contributes.propTypes = {
   data: PropTypes.instanceOf(Object).isRequired,
   categoryId: PropTypes.number.isRequired,
 };
 
-export default HotTopics;
+export default Contributes;

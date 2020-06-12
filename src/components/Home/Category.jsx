@@ -12,7 +12,8 @@ const useStyles = createUseStyles(({
     listStyleType: 'none',
     display: 'flex',
     flexWrap: 'wrap',
-    margin: [32, 0, 16],
+    margin: [32, 0],
+    justifyContent: 'center',
   },
   action: {
     color: '#2c2c2c',
@@ -20,13 +21,15 @@ const useStyles = createUseStyles(({
   },
   item: {
     fontSize: 16,
-    padding: [8, 12],
-    margin: [0, 16, 16, 0],
+    padding: [4, 12],
     backgroundColor: 'rgba(0, 0, 0, .015)',
     borderRadius: 6,
     cursor: 'pointer',
     color: '#929292',
     transition: 'all .3s linear',
+    '& + &': {
+      marginLeft: 12,
+    },
     '&:hover': {
       extend: 'action',
     },

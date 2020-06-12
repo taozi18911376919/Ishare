@@ -5,12 +5,12 @@ import { Link } from '@Server/routes';
 
 const useStyles = createUseStyles(({
   root: {
+    borderBottom: '1px solid #cfcfcf',
     display: 'flex',
     justifyContent: 'space-between',
-    padding: [0, 24],
-    height: 68,
+    height: 90,
+    padding: [0, 48],
     boxSizing: 'border-box',
-    borderBottom: '1px solid #cfcfcf',
   },
   start: {
     display: 'flex',
