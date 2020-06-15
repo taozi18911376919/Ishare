@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
 
 import ModuleTilt from '@Components/Base/ModuleTitle';
-import TopicWrapper from '@Components/Base/TopicWrapper';
+import RecommendWrapper from '@Components/Base/RecommendWrapper';
 
-const HotTopics = props => {
+const RecommendTopics = props => {
   const { data, categoryId } = props;
   const [categoryName, setCategoryName] = useState(undefined);
   const categorys = useSelector(state => state.getIn(['home', 'data', 'category']), shallowEqual);
@@ -24,18 +24,18 @@ const HotTopics = props => {
 
   return (
     <>
-      <ModuleTilt color>
-        Hot Topics
+      <ModuleTilt>
+        Topics you may like
         {categoryName && <small>#{categoryName}</small>}
       </ModuleTilt>
-      <TopicWrapper data={data} />
+      <RecommendWrapper data={data} />
     </>
   );
 };
 
-HotTopics.propTypes = {
+RecommendTopics.propTypes = {
   data: PropTypes.instanceOf(Object).isRequired,
   categoryId: PropTypes.number.isRequired,
 };
 
-export default HotTopics;
+export default RecommendTopics;

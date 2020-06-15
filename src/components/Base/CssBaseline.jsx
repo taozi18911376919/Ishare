@@ -33,6 +33,14 @@ const useStyles = createUseStyles(({
     },
     a: {
       backgroundColor: 'transparent',
+      textDecoration: 'none',
+      color: '#2c2c2c',
+      '&:hover': {
+        color: '#85a5ff',
+      },
+    },
+    svg: {
+      verticalAlign: 'middle',
     },
     'abbr[title]': {
       borderBottom: 'none',

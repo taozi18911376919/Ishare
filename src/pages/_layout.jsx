@@ -3,12 +3,14 @@ import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import Header from '@Componnents/Base/Header';
-import Footer from '@Componnents/Base/Footer';
+import Header from '@Components/Base/Header';
+import Footer from '@Components/Base/Footer';
 
 const useStyles = createUseStyles(({
   root: {
     flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
   },
 }), {
   name: 'Layout',

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
 
-import ModuleTilt from '@Componnents/Base/ModuleTitle';
-import ContributeWrapper from '@Componnents/Base/ContributeWrapper';
+import ModuleTilt from '@Components/Base/ModuleTitle';
+import ContributeWrapper from '@Components/Base/ContributeWrapper';
 
 const Contributes = props => {
   const { data, categoryId } = props;
@@ -25,8 +25,9 @@ const Contributes = props => {
   return (
     <>
       <ModuleTilt>
+        {/* eslint-disable-next-line max-len */}
         Lastest Contribute
-        {categoryName && <small>{categoryName}</small>}
+        {categoryName && <small>#{categoryName}</small>}
       </ModuleTilt>
       <ContributeWrapper data={data} />
     </>

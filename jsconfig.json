@@ -9,7 +9,7 @@
     "paths": {
       "@Store": ["./src/store"],
       "@Server/*": ["./server/*"],
-      "@Componnents/*": ["./src/components/*"],
+      "@Components/*": ["./src/components/*"],
       "@Config": ["./src/config"],
       "@Utils/*": ["./src/utils/*"],
       "@Actions/*": ["./src/actions/*"],

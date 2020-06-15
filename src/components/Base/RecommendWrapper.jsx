@@ -3,38 +3,39 @@ import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import Contribute from '@Components/Base/Contribute';
+import Recommend from '@Components/Base/Recommend';
 
 const useStyles = createUseStyles(({
   root: {
     width: '100%',
-    display: 'grid',
     padding: 0,
+    display: 'grid',
     listStyleType: 'none',
     gridTemplateColumns: 'repeat(3, 30%)',
     gridColumnGap: '5%',
+  },
+  column: {
+    gridTemplateColumns: 'repeat(2, 47%)',
+    gridColumnGap: '6%',
   },
   item: {
     margin: [0, 0, 48, 0],
   },
 }), {
-  name: 'ContributeWrapper',
+  name: 'RecommendWrapper',
 });
 
-const ContributeWrapper = props => {
-  const { data, isColumn } = props;
+const RecommendWrapper = props => {
+  const { data, isShowDesc, column } = props;
   const classes = useStyles();
   return (
     <ul
-      className={classNames({
-        [classes.root]: true,
-        [classes.directionColumn]: isColumn,
-      })}
+      className={classNames({ [classes.root]: true, [classes.column]: column })}
     >
       {
         data.map(contribute => (
           <li className={classNames(classes.item)} key={contribute.get('id')}>
-            <Contribute isColumn data={contribute} />
+            <Recommend isShowDesc={isShowDesc} data={contribute} />
           </li>
         ))
       }
@@ -42,14 +43,15 @@ const ContributeWrapper = props => {
   );
 };
 
-ContributeWrapper.propTypes = {
+RecommendWrapper.propTypes = {
   data: PropTypes.instanceOf(Object).isRequired,
-  isColumn: PropTypes.bool,
-
+  isShowDesc: PropTypes.bool,
+  column: PropTypes.bool,
 };
 
-ContributeWrapper.defaultProps = {
-  isColumn: false,
+RecommendWrapper.defaultProps = {
+  isShowDesc: false,
+  column: false,
 };
 
-export default ContributeWrapper;
+export default RecommendWrapper;

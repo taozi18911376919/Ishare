@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
+import { Link } from '@Server/routes';
 
-import CenterBlock from '@Componnents/Base/CenterBlock';
-import HomeCategory from '@Componnents/Home/Category';
-import HomeHotTopics from '@Componnents/Home/HotTopics';
-import HomeContributes from '@Componnents/Home/Contributes';
+import CenterBlock from '@Components/Base/CenterBlock';
+import HomeCategory from '@Components/Home/Category';
+import HomeHotTopics from '@Components/Home/HotTopics';
+import HomeContributes from '@Components/Home/Contributes';
+import HomeRecommendTopics from '@Components/Home/RecommendTopics';
+import FloatLabelInput from '@Components/Base/FloatLabelInput';
+import TopicIcon from '@Components/Icon/Topic';
+import ContributeIcon from '@Components/Icon/Contribute';
+import NotificationIcon from '@Components/Icon/Notification';
+import FavoriteIcon from '@Components/Icon/Favorite';
+import RemindIcon from '@Components/Icon/Remind';
 
 import HomeAction from '@Actions/home';
 
@@ -19,6 +27,7 @@ const HomePage = () => {
   const category = homeData.get('category');
   const hotTopic = homeData.get('hot_topic');
   const latestContribute = homeData.get('latest_contribute');
+  const recommendTopic = homeData.get('recommend_topic');
 
   return (
     <CenterBlock>
@@ -28,19 +37,30 @@ const HomePage = () => {
           categoryId={categoryId}
           onChange={setCategoryId}
         />
-        <HomeHotTopics
-          data={hotTopic}
-          categoryId={categoryId}
+        {!!hotTopic.size && <HomeHotTopics data={hotTopic} categoryId={categoryId} />}
+        {!!latestContribute.size && <HomeContributes data={latestContribute} categoryId={categoryId} />}
+        {!!recommendTopic.size && <HomeRecommendTopics data={recommendTopic} categoryId={categoryId} />}
+        <FloatLabelInput
+          name='email'
+          placeholder='Email'
+          value=''
         />
-        <HomeContributes
-          data={latestContribute}
-          categoryId={categoryId}
-        />
+        <TopicIcon />
+        <ContributeIcon />
+        <NotificationIcon />
+        <FavoriteIcon />
+        <RemindIcon />
+        <Link route='/account'>
+          <a>account</a>
+        </Link>
       </>
     </CenterBlock>
   );
 };
 
-HomePage.getInitialProps = ({ store }) => store.dispatch(HomeAction.fetchHomeData());
+HomePage.getInitialProps = async ({ store }) => {
+  await store.dispatch(HomeAction.fetchHomeData());
+  return store;
+};
 
 export default HomePage;

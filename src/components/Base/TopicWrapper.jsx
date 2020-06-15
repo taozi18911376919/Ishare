@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 
-import Topic from '@Componnents/Base/Topic';
+import Topic from '@Components/Base/Topic';
 
 const useStyles = createUseStyles(({
   root: {

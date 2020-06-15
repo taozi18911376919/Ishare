@@ -33,7 +33,7 @@ const useStyles = createUseStyles(({
     bottom: 0,
     left: 0,
     padding: [8, 16],
-    backgroundImage: 'linear-gradient(180deg, rgba(216,216,216,0) 0%, rgba(31,31,31,0.68) 100%)',
+    backgroundImage: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.68) 100%)',
     color: '#ffffff',
     lineHeight: 1.4,
     textShadow: '1px 1px 0px rgba(0,0,0,.5)',
@@ -65,7 +65,7 @@ const Topic = ({ data }) => {
   const description = data.get('description');
   const pic = data.get('pic');
   return (
-    <Link route={`/${id}`}>
+    <Link route={`/topics/${id}`}>
       <div className={classNames(classes.root)}>
         <img
           className={classNames(classes.pic)}

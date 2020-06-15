@@ -3,12 +3,14 @@ import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import { Link } from '@Server/routes';
 
+import AccountAvatar from '@Components/Base/AccountAvatar';
+
 const useStyles = createUseStyles(({
   root: {
     borderBottom: '1px solid #cfcfcf',
     display: 'flex',
     justifyContent: 'space-between',
-    height: 90,
+    height: 68,
     padding: [0, 48],
     boxSizing: 'border-box',
   },
@@ -26,8 +28,8 @@ const useStyles = createUseStyles(({
     alignSelf: 'stretch',
   },
   logoIcon: {
-    width: 48,
-    height: 48,
+    width: 42,
+    height: 42,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -71,7 +73,7 @@ const Header = () => {
         </button>
       </div>
       <div className={classNames(classes.start)}>
-        end
+        <AccountAvatar name='Jacks' isSmall />
       </div>
     </header>
   );

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { parseCookies } from 'nookies';
 import { fromJS } from 'immutable';
+import qs from 'qs';
 
 const network = axios.create({
   withCredentials: process.env.NODE_ENV === 'production',
@@ -13,6 +14,8 @@ network.interceptors.request.use(config => {
     ...config.headers,
     ...Authorization,
   };
+
+  config.data = qs.stringify(config.data);
   return config;
 });
 
