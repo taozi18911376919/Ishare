@@ -18,6 +18,7 @@ const useStyles = createUseStyles(({
 
 const Layout = ({ children }) => {
   const classes = useStyles();
+
   return (
     <>
       <Header />

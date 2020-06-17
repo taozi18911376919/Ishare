@@ -10,11 +10,12 @@ const network = axios.create({
 network.interceptors.request.use(config => {
   const { token } = parseCookies();
   const Authorization = token ? { Authorization: `Bearer ${token}` } : {};
-  config.headers = {
-    ...config.headers,
-    ...Authorization,
-  };
-
+  if (!('Authorization' in config.headers)) {
+    config.headers = {
+      ...config.headers,
+      ...Authorization,
+    };
+  }
   config.data = qs.stringify(config.data);
   return config;
 });
@@ -25,10 +26,14 @@ const NETWORK_CODE = {
 
 network.interceptors.response.use(response => {
   if ('data' in response && response.data) {
-    const { data, code } = response.data;
+    const { data, code, message } = response.data;
     if (code === NETWORK_CODE.ERROR_OK) {
       return fromJS(data);
     }
+    if (JSON.stringify(data) === '[]') {
+      throw Error(message);
+    }
+    throw Error(JSON.stringify(data));
   }
   return undefined;
 });

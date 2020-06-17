@@ -40,16 +40,7 @@ const useStyles = createUseStyles(({
   root: {
     width: '100%',
     display: 'flex',
-    transition: 'all .35s',
-    '&:hover': {
-      boxShadow: '0px 2px 16px 0px rgba(99,99,99,0.5)',
-    },
-  },
-  directionColumn: {
     flexDirection: 'column',
-    '&:hover': {
-      boxShadow: '0px 2px 16px 0px rgba(99,99,99,0)',
-    },
   },
   top: {
     display: 'none',
@@ -120,6 +111,11 @@ const useStyles = createUseStyles(({
       alignItems: 'center',
       padding: 6,
       position: 'relative',
+      '&:active svg': {
+        transition: 'all .5s linear',
+        transform: 'scale(1.5)',
+        opacity: 0.75,
+      },
     },
     '& + &': {
       marginLeft: 48,
@@ -145,6 +141,53 @@ const useStyles = createUseStyles(({
     position: 'relative',
     top: 3,
   },
+  row: {
+    padding: [24, 24, 15, 24],
+    flexDirection: 'row',
+    boxSizing: 'border-box',
+    transition: 'all .35s',
+    borderRadius: 4,
+    '&:hover': {
+      boxShadow: '0px 2px 16px 0px rgba(99,99,99,0.5)',
+    },
+    '& $picWrapper': {
+      flexShrink: 0,
+      width: 300,
+      height: 186,
+      paddingTop: 0,
+      marginRight: 32,
+    },
+    '& $title': {
+      height: 28,
+      margin: 0,
+      ...mutilpellipsis(1),
+    },
+    '& $desc': {
+      height: 67.2,
+      ...mutilpellipsis(3),
+    },
+  },
+  fromTopicFitness: {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: 18,
+  },
+  topicFitness: {
+    marginLeft: '10%',
+    whiteSpace: 'nowrap',
+    cursor: 'pointer',
+    color: '#1877f2',
+  },
+  '@media (max-width: 1280px)': {
+    fromTopicFitness: {
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+    },
+    topicFitness: {
+      marginLeft: 0,
+      marginTop: 12,
+    },
+  },
 }), {
   name: 'Contribute',
 });
@@ -162,22 +205,27 @@ const Contribute = props => {
   const [dislike, setDislike] = useState(defaultDisLike);
   const [add, setAdd] = useState(false);
   const [subtract, setSubtract] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const handleChangeLike = type => {
-    netWork.post(`${Config.apiBaseUrl}/contribute/like-dislike`, {
+    if (disabled) {
+      return;
+    }
+    netWork.post(`${Config.apiBaseUrl}/api/v1/contribute/like-dislike`, {
       contribute_id: id,
       type,
     }).then(res => {
       if (res) {
         if (type === 'LIKE') {
           setAdd(true);
-          setLike(like + 1);
+          setLike(res);
         }
         if (type === 'DISLIKE') {
           setSubtract(true);
-          setDislike(dislike - 1);
+          setDislike(res);
         }
       }
+      setDisabled(true);
     });
   };
 
@@ -197,12 +245,62 @@ const Contribute = props => {
     }
   }, [dislike]);
 
+  const createTitle = () => {
+    if (!isColumn) {
+      return (
+        <h3 className={classNames(classes.title)} title={title}>{title}</h3>
+      );
+    }
+    return (
+      <a
+        href={data.get('from_url')}
+        target='_blank'
+        rel='noreferrer'
+      >
+        <h3 className={classNames(classes.title)} title={title}>{title}</h3>
+      </a>
+    );
+  };
+
+  const createFromElement = (
+    <div className={classNames(classes.from)}>
+      <span>From</span>
+      <a
+        className={classNames(classes.fromUrl)}
+        href={data.get('from_url')}
+        target='_blank'
+        rel='noreferrer'
+      >
+        {data.get('from_url')}
+      </a>
+      {createdAt && (
+        <>
+          <span className={classNames(classes.line)} />
+          <span>{data.get('created_at')}</span>
+        </>
+      )}
+    </div>
+  );
+
+  const createFromTopicFitnessElement = () => {
+    if (!isColumn) {
+      return (
+        <div className={classNames(classes.fromTopicFitness)}>
+          {createFromElement}
+          <a className={classNames(classes.topicFitness)}>From TopicFitness</a>
+        </div>
+
+      );
+    }
+    return <></>;
+  };
+
 
   return (
     <div
       className={classNames({
         [classes.root]: true,
-        [classes.directionColumn]: isColumn,
+        [classes.row]: !isColumn,
       })}
     >
       <div className={classNames(classes.picWrapper)}>
@@ -215,31 +313,10 @@ const Contribute = props => {
         </a>
       </div>
       <div className={classNames(classes.content)}>
-        <a
-          href={data.get('from_url')}
-          target='_blank'
-          rel='noreferrer'
-        >
-          <h3 className={classNames(classes.title)} title={title}>{title}</h3>
-        </a>
-        <div className={classNames(classes.from)}>
-          <span>From</span>
-          <a
-            className={classNames(classes.fromUrl)}
-            href={data.get('from_url')}
-            target='_blank'
-            rel='noreferrer'
-          >
-            {data.get('from_url')}
-          </a>
-          {createdAt && (
-            <>
-              <span className={classNames(classes.line)} />
-              <span>{data.get('created_at')}</span>
-            </>
-          )}
-        </div>
+        {createTitle()}
+        {isColumn && createFromElement}
         <p className={classNames(classes.desc)}>{data.get('description')}</p>
+        {createFromTopicFitnessElement()}
         <div className={classNames(classes.controls)}>
           <div className={classNames(classes.control)}>
             <button
@@ -276,7 +353,7 @@ Contribute.propTypes = {
 };
 
 Contribute.defaultProps = {
-  isColumn: false,
+  isColumn: true,
 };
 
 export default Contribute;

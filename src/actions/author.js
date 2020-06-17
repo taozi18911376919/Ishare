@@ -10,7 +10,7 @@ const AUTHOR_CLEAR = `${prefix}_CLEAR`;
 
 const fetchAuthorData = query => dispatch => {
   dispatch({ type: AUTHOR_REQUEST });
-  return NetWork.post(`${Config.apiBaseUrl}/author/index`, { ...query })
+  return NetWork.post(`${Config.apiBaseUrl}/api/v1/author/index`, { ...query })
     .then(data => dispatch({ type: AUTHOR_SUCCESS, payload: data }))
     .catch(err => {
       dispatch({

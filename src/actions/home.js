@@ -9,7 +9,7 @@ const HOME_FAILURE = `${prefix}_FAILURE`;
 
 const fetchHomeData = categoryId => dispatch => {
   dispatch({ type: HOME_REQUEST });
-  return NetWork.post(`${Config.apiBaseUrl}/home/index`, { category_id: categoryId })
+  return NetWork.post(`${Config.apiBaseUrl}/api/v1/home/index`, { category_id: categoryId })
     .then(data => dispatch({ type: HOME_SUCCESS, payload: data }))
     .catch(err => {
       dispatch({

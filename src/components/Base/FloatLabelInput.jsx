@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 
-const labelAnimate = 'translateY(-84%) scale(.85)';
+const labelAnimate = 'translateY(-60%) scale(.85)';
 
 const useStyles = createUseStyles(({
   root: {
@@ -13,14 +13,15 @@ const useStyles = createUseStyles(({
   input: {
     width: '100%',
     borderRadius: 4,
-    fontSize: 16,
-    height: 36,
+    fontSize: 14,
+    height: 60,
     zIndex: 1,
     padding: [24, 16, 8],
     outline: 'none',
     color: '#2c2c2c',
     background: '#ffffff',
     border: '1px solid #929292',
+    boxSizing: 'border-box',
     boxShadow: '0px 2px 9px 0px rgba(0,93,205,0.1)',
     '-webkit-transition': 'border .3s',
     transition: 'border .3s',

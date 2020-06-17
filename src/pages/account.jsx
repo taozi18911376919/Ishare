@@ -1,19 +1,22 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import React from 'react';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { parseCookies } from 'nookies';
+
 
 import { Link } from '@Server/routes';
 import CenterBlock from '@Components/Base/CenterBlock';
-import AccountAvatar from '@Components/Base/AccountAvatar';
 import AccountTopics from '@Components/Account/Topics';
+import AccountContribute from '@Components/Account/Contribute';
+import AccountFavorite from '@Components/Account/Favorite';
 import TopicIcon from '@Components/Icon/Topic';
 import ContributeIcon from '@Components/Icon/Contribute';
 import NotificationIcon from '@Components/Icon/Notification';
 import FavoriteIcon from '@Components/Icon/Favorite';
 
-import AuthorAction from '@Actions/author';
+import AccountAction from '@Actions/account';
+import { useSelector, shallowEqual } from 'react-redux';
 
 const mutilpellipsis = line => ({
   display: '-webkit-box',
@@ -62,13 +65,18 @@ const useStyles = createUseStyles(({
     margin: 0,
     padding: [48, 0],
     borderRight: '1px solid #cfcfcf',
+    flexShrink: 0,
   },
   item: {
     cursor: 'pointer',
-    padding: [12, 24],
+    padding: [12, 24, 12, 0],
     margin: [12, 0],
     flexShrink: 0,
-    '&:hover': {
+    color: '#FFD666',
+    '& span': {
+      color: '#2c2c2c',
+    },
+    '&:hover span': {
       color: '#1877f2',
     },
     '& svg': {
@@ -76,7 +84,9 @@ const useStyles = createUseStyles(({
     },
   },
   active: {
-    color: '#1877f2',
+    '& span': {
+      color: '#1877f2',
+    },
   },
   main: {
     flex: 1,
@@ -111,37 +121,43 @@ const menuData = [
 
 const Author = props => {
   const { pageType, pathname } = props;
-  const dispatch = useDispatch();
   const classes = useStyles();
 
-  // const authorData = useSelector(state => state.getIn(['author', 'data']), shallowEqual);
-  // const authorInfo = authorData.get('author_info');
+  const user = useSelector(state => state.getIn(['account', 'user']), shallowEqual);
 
-  // useEffect(() => () => {
-  //   dispatch(AuthorAction.clearAuthorData());
-  // }, []);
+  const createPageElement = () => {
+    switch (pageType) {
+      case 'contributes':
+        return <AccountContribute />;
+      case 'favorites':
+        return <AccountFavorite />;
+      default:
+        return <AccountTopics />;
+    }
+  };
 
-  // const createAuthorInfo = () => {
-  //   if (authorInfo.size) {
-  //     const avatar = authorInfo.get('avatar');
-  //     const name = authorInfo.get('name');
-  //     const email = authorInfo.get('email');
-  //     return (
-  //       <div className={classNames(classes.root)}>
-  //         {avatar ? <img src={avatar} alt='' className={classNames(classes.pic)} /> : <AccountAvatar name={name} />}
-  //         <div className={classNames(classes.content)}>
-  //           <h2 className={classNames(classes.title)}>{name}</h2>
-  //           <span className={classNames(classes.link)}>{email}</span>
-  //         </div>
-  //       </div>
-  //     );
-  //   }
-  //   return <></>;
-  // };
+
+  const createUserInfo = () => {
+    if (user.get('name')) {
+      const avatar = user.get('avatar');
+      const name = user.get('name');
+      const email = user.get('email');
+      return (
+        <div className={classNames(classes.root)}>
+          <img src={avatar} alt='' className={classNames(classes.pic)} />
+          <div className={classNames(classes.content)}>
+            <h2 className={classNames(classes.title)}>{name}</h2>
+            <span className={classNames(classes.link)}>{email}</span>
+          </div>
+        </div>
+      );
+    }
+    return <></>;
+  };
 
   return (
     <>
-      {/* {createAuthorInfo()} */}
+      {createUserInfo()}
       <CenterBlock className={classNames(classes.wrapper)}>
         <ul className={classNames(classes.side)}>
           {
@@ -154,14 +170,14 @@ const Author = props => {
                   })}
                 >
                   {item.icon}
-                  {item.label}
+                  <span>{item.label}</span>
                 </li>
               </Link>
             ))
           }
         </ul>
         <div className={classNames(classes.main)}>
-          <AccountTopics />
+          {createPageElement()}
         </div>
       </CenterBlock>
     </>
@@ -177,8 +193,33 @@ Author.defaultProps = {
   pageType: '',
 };
 
-Author.getInitialProps = async ({ store, query: { pageType }, pathname }) => {
-  // await store.dispatch(AuthorAction.fetchAuthorData({ author_id: id }));
+Author.getInitialProps = async ctx => {
+  const { store, query: { pageType }, pathname } = ctx;
+  const { token } = parseCookies(ctx);
+  let type = 'TOPIC';
+
+  switch (pageType) {
+    case 'contributes':
+      type = 'CONTRIBUTE';
+      break;
+    case 'favorites':
+      type = 'FAVORITE';
+      break;
+    case 'notification':
+      type = 'NOTIFICATION';
+      break;
+    default:
+      type = 'TOPIC';
+      break;
+  }
+
+  await store.dispatch(AccountAction.fetchData({
+    type,
+    page: 1,
+    page_size: 10,
+  }, {
+    Authorization: `Bearer ${token}`,
+  }));
   return { pageType, store, pathname };
 };
 

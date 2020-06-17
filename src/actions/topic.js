@@ -10,7 +10,7 @@ const TOPIC_CLEAR = `${prefix}_CLEAR`;
 
 const fetchTopicData = query => dispatch => {
   dispatch({ type: TOPIC_REQUEST });
-  return NetWork.post(`${Config.apiBaseUrl}/topic/index`, { ...query })
+  return NetWork.post(`${Config.apiBaseUrl}/api/v1/topic/index`, { ...query })
     .then(data => dispatch({ type: TOPIC_SUCCESS, payload: data }))
     .catch(err => {
       dispatch({

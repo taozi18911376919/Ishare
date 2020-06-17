@@ -17,6 +17,11 @@ const useStyles = createUseStyles(({
   item: {
     margin: [0, 0, 48, 0],
   },
+  column: {
+    gridTemplateColumns: '100%',
+    gridColumnGap: 0,
+  },
+
 }), {
   name: 'ContributeWrapper',
 });
@@ -28,13 +33,13 @@ const ContributeWrapper = props => {
     <ul
       className={classNames({
         [classes.root]: true,
-        [classes.directionColumn]: isColumn,
+        [classes.column]: !isColumn,
       })}
     >
       {
         data.map(contribute => (
           <li className={classNames(classes.item)} key={contribute.get('id')}>
-            <Contribute isColumn data={contribute} />
+            <Contribute isColumn={isColumn} data={contribute} />
           </li>
         ))
       }
@@ -45,11 +50,10 @@ const ContributeWrapper = props => {
 ContributeWrapper.propTypes = {
   data: PropTypes.instanceOf(Object).isRequired,
   isColumn: PropTypes.bool,
-
 };
 
 ContributeWrapper.defaultProps = {
-  isColumn: false,
+  isColumn: true,
 };
 
 export default ContributeWrapper;

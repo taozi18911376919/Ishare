@@ -10,7 +10,7 @@ const CATEGORY_FAILURE = `${prefix}_FAILURE`;
 const fetchCategory = () => dispatch => {
   try {
     dispatch({ type: CATEGORY_REQUEST });
-    NetWork.post(`${Config.apiBaseUrl}/category/all`).then(res => {
+    NetWork.post(`${Config.apiBaseUrl}/api/v1/category/all`).then(res => {
       if (res && res.categorys) {
         dispatch({
           type: CATEGORY_SUCCESS,

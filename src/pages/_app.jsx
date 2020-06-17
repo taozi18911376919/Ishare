@@ -6,9 +6,9 @@ import { fromJS } from 'immutable';
 import withRedux from 'next-redux-wrapper';
 import NProgress from 'nprogress';
 import Router from 'next/router';
+import { parseCookies } from 'nookies';
 
-import ngProgress from 'nprogress/nprogress.css';
-
+import AccountAction from '@Actions/account';
 import makeStore from '@Store';
 import generateClassName from '@Utils/generateClassName';
 import CssBaseline from '@Components/Base/CssBaseline';
@@ -18,9 +18,7 @@ NProgress.configure({
   showSpinner: false,
 });
 
-Router.events.on('routeChangeStart', url => {
-  // eslint-disable-next-line no-console
-  console.log(`Loading: ${url}`);
+Router.events.on('routeChangeStart', () => {
   NProgress.start();
 });
 Router.events.on('routeChangeComplete', () => {
@@ -30,6 +28,17 @@ Router.events.on('routeChangeError', () => NProgress.done());
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
+    const { token } = parseCookies(ctx);
+    const state = ctx.store.getState();
+    if (token && !state.getIn(['account', 'user', 'name'])) {
+      await ctx.store.dispatch(AccountAction.fetchUserData({
+        type: 'TOPIC',
+        page: 1,
+        page_size: 1,
+      }, {
+        Authorization: `Bearer ${token}`,
+      }));
+    }
     return {
       pageProps: {
         ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),
@@ -54,7 +63,6 @@ class MyApp extends App {
 
     return (
       <JssProvider generateId={generateClassName}>
-        <style jsx global>{ngProgress}</style>
         <Provider store={store}>
           <CssBaseline />
           <Layout>

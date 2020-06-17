@@ -7,37 +7,37 @@ import ViewMore from '@Components/Base/ViewMore';
 import NoMoreData from '@Components/Base/NoMoreData';
 import AccountAction from '@Actions/account';
 
-const Topics = () => {
+const Favorite = () => {
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
-  const { topic, loading } = useSelector(state => ({
-    topic: state.getIn(['account', 'topic']),
+  const { favorite, loading } = useSelector(state => ({
+    favorite: state.getIn(['account', 'favorite']),
     loading: state.getIn(['account', 'loading']),
   }), shallowEqual);
-  const data = topic.get('data');
-  const currentPage = topic.get('current_page');
-  const lastPage = topic.get('last_page');
-  const pageSize = topic.get('per_page');
+  const data = favorite.get('data');
+  const currentPage = favorite.get('current_page');
+  const lastPage = favorite.get('last_page');
+  const pageSize = favorite.get('per_page');
 
   useEffect(() => {
     if (page !== 1) {
       dispatch(AccountAction.fetchData({
-        type: 'TOPIC',
+        type: 'FAVORITE',
         page,
         page_size: pageSize,
       }));
     }
   }, [page]);
 
-  useEffect(() => () => {
-    dispatch(AccountAction.clearData('TOPIC'));
-  }, []);
-
   const handleChangeCurrentPage = () => {
     if (!loading) {
       setPage(page + 1);
     }
   };
+
+  useEffect(() => () => {
+    dispatch(AccountAction.clearData('FAVORITE'));
+  }, []);
 
   const statusElement = () => {
     if (currentPage === lastPage) {
@@ -57,4 +57,4 @@ const Topics = () => {
   );
 };
 
-export default Topics;
+export default Favorite;

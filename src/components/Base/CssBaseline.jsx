@@ -3,6 +3,19 @@ import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles(({
   '@global': {
+    /* Make clicks pass-through */
+    '#nprogress': {
+      pointerEvents: 'none',
+    },
+    '#nprogress .bar': {
+      background: '#29d',
+      position: 'fixed',
+      zIndex: 1031,
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: 2,
+    },
     html: {
       lineheight: 1.15,
       '-webkit-text-size-adjust': '100%',

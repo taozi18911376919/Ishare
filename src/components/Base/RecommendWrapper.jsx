@@ -33,9 +33,9 @@ const RecommendWrapper = props => {
       className={classNames({ [classes.root]: true, [classes.column]: column })}
     >
       {
-        data.map(contribute => (
-          <li className={classNames(classes.item)} key={contribute.get('id')}>
-            <Recommend isShowDesc={isShowDesc} data={contribute} />
+        data.map(recommend => (
+          <li className={classNames(classes.item)} key={recommend.get('id')}>
+            <Recommend isShowDesc={isShowDesc} data={recommend} />
           </li>
         ))
       }

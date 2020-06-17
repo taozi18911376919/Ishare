@@ -8,12 +8,14 @@ import category from '@Reducers/category';
 import home from '@Reducers/home';
 import topic from '@Reducers/topic';
 import author from '@Reducers/author';
+import account from '@Reducers/account';
 
 const combinedReducer = combineReducers({
   category,
   home,
   topic,
   author,
+  account,
 });
 
 
