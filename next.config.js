@@ -23,6 +23,7 @@ const nextConfig = withBundleAnalyzer({
   pageExtensions: ['jsx', 'js'],
   publicRuntimeConfig: {
     API_BASE_URL: process.env.API_BASE_URL,
+    FACEBOOK_APPID: process.env.FACEBOOK_APPID,
   },
 });
 

@@ -53,6 +53,17 @@ const signin = (params, formikBag) => () => {
     });
 };
 
+const facebookSign = params => () => NetWork.post(`${Config.apiBaseUrl}/api/v1/user/login`, {
+  ...params,
+})
+  .then(data => {
+    setCookie(null, 'token', data.getIn(['user', 'api_token']), {
+      path: '/',
+      maxAge: 100 * 365 * 24 * 60 * 60,
+    });
+    Router.push('/account');
+  });
+
 const logout = () => () => {
   NetWork.post(`${Config.apiBaseUrl}/api/v1/user/logout`).then(() => {
     setCookie(null, 'token', '', {
@@ -68,4 +79,5 @@ export default {
   signup,
   signin,
   logout,
+  facebookSign,
 };

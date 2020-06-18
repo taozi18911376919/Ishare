@@ -3,6 +3,9 @@ import classNames from 'classnames';
 import SignInForm from '@Components/Form/SignInForm';
 import { createUseStyles } from 'react-jss';
 
+import FacebookLogin from '@Components/Base/FacebookLogin';
+
+//
 const useStyles = createUseStyles(({
   root: {
     width: 500,
@@ -21,11 +24,13 @@ const useStyles = createUseStyles(({
 
 export default () => {
   const classes = useStyles();
+
   return (
     <div className={classNames(classes.root)}>
       <h2 className={classes.title}>Login</h2>
       <div className={classes.wrapper}>
         <SignInForm />
+        <FacebookLogin />
       </div>
     </div>
   );
