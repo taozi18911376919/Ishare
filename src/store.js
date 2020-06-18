@@ -9,6 +9,7 @@ import home from '@Reducers/home';
 import topic from '@Reducers/topic';
 import author from '@Reducers/author';
 import account from '@Reducers/account';
+import search from '@Reducers/search';
 
 const combinedReducer = combineReducers({
   category,
@@ -16,6 +17,7 @@ const combinedReducer = combineReducers({
   topic,
   author,
   account,
+  search,
 });
 
 

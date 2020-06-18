@@ -4,7 +4,6 @@ import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 
 import CenterBlock from '@Components/Base/CenterBlock';
-import AccountAvatar from '@Components/Base/AccountAvatar';
 import ModuleTilt from '@Components/Base/ModuleTitle';
 import TopicWrapper from '@Components/Base/TopicWrapper';
 import ContributeWrapper from '@Components/Base/ContributeWrapper';
@@ -50,10 +49,10 @@ const useStyles = createUseStyles(({
     ...mutilpellipsis(1),
   },
 }), {
-  name: 'Author',
+  name: 'AuthorPage',
 });
 
-const Author = () => {
+const AuthorPage = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -73,7 +72,7 @@ const Author = () => {
       const email = authorInfo.get('email');
       return (
         <div className={classNames(classes.root)}>
-          {avatar ? <img src={avatar} alt='' className={classNames(classes.pic)} /> : <AccountAvatar name={name} />}
+          <img src={avatar} alt='' className={classNames(classes.pic)} />
           <div className={classNames(classes.content)}>
             <h2 className={classNames(classes.title)}>{name}</h2>
             <span className={classNames(classes.link)}>{email}</span>
@@ -101,9 +100,9 @@ const Author = () => {
   );
 };
 
-Author.getInitialProps = async ({ store, query: { id } }) => {
+AuthorPage.getInitialProps = async ({ store, query: { id } }) => {
   await store.dispatch(AuthorAction.fetchAuthorData({ author_id: id }));
   return store;
 };
 
-export default Author;
+export default AuthorPage;

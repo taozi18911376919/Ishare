@@ -1,12 +1,15 @@
-import React from 'react';
+/* eslint-disable max-len */
+import React, { useRef, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import Router from 'next/router';
 import Icon from '@mdi/react';
 import { mdiLogoutVariant } from '@mdi/js';
 
 import { Link } from '@Server/routes';
 import SignAction from '@Actions/sign';
+import SearchAction from '@Actions/search';
 
 import TopicIcon from '@Components/Icon/Topic';
 import ContributeIcon from '@Components/Icon/Contribute';
@@ -125,6 +128,30 @@ const useStyles = createUseStyles(({
     height: 48,
     borderRadius: '50%',
   },
+  searchWrapper: {
+    position: 'relative',
+    '& svg': {
+      position: 'absolute',
+      left: 10,
+      top: 10,
+    },
+  },
+  search: {
+    marginRight: 24,
+    width: 200,
+    height: 36,
+    borderRadius: 18,
+    outline: 'none',
+    boxSizing: 'border-box',
+    backgroundColor: '#f3f3f3',
+    border: 'none',
+    fontSize: 14,
+    padding: [11, 16, 11, 36],
+    transition: 'width .3s linear',
+    '&:focus': {
+      width: 360,
+    },
+  },
 }), {
   name: 'Header',
 });
@@ -155,12 +182,33 @@ const menuData = [
 
 const Header = () => {
   const classes = useStyles();
-
   const dispatch = useDispatch();
-
+  const searchRef = useRef(null);
   const { user } = useSelector(state => ({
     user: state.getIn(['account', 'user']),
   }), shallowEqual);
+
+  const searchListener = () => {
+    const targetValue = searchRef.current.value;
+    dispatch(SearchAction.setSearchData(targetValue));
+    if (global.window.location.href.indexOf('/search') === -1) {
+      Router.push('/search');
+    }
+    searchRef.current.blur();
+  };
+
+  const handleEnter = e => {
+    if (e.keyCode === 13) {
+      searchListener();
+    }
+  };
+
+  useEffect(() => {
+    searchRef.current.addEventListener('keypress', handleEnter);
+    return () => {
+      searchRef.current.removeEventListener('keypress', handleEnter);
+    };
+  }, [searchRef.current]);
 
   const createSignElement = () => {
     if (user.get('name')) {
@@ -169,12 +217,12 @@ const Header = () => {
           <img src={user.get('avatar')} alt='avatar' className={classNames(classes.avatar)} />
           <ul className={classNames(classes.dropdown)}>
             {menuData.map(item => (
-              <Link route={item.href} key={item.label}>
-                <li className={classNames(classes.dropItem)}>
+              <li key={item.label}>
+                <a className={classNames(classes.dropItem)} href={item.href}>
                   {item.icon}
                   <span className={classNames(classes.dropLabel)}>{item.label}</span>
-                </li>
-              </Link>
+                </a>
+              </li>
             ))}
 
             <li className={classNames(classes.dropItem)} onClick={() => dispatch(SignAction.logout())}>
@@ -223,6 +271,19 @@ const Header = () => {
         )}
       </div>
       <div className={classNames(classes.end)}>
+        <div className={classNames(classes.searchWrapper)}>
+          <svg width='16px' height='16px' viewBox='0 0 16 16'>
+            <g stroke='none' strokeWidth='1' fill='none' fillRule='evenodd'>
+              <g transform='translate(-1480.000000, -56.000000)' fillRule='nonzero'>
+                <g transform='translate(1480.000000, 56.000000)'>
+                  <rect fill='#000000' opacity='0' x='0' y='0' width='15.9843902' height='15.9843902' />
+                  <path d='M15.7437388,15.7444048 C15.5916211,15.8981842 15.3843053,15.9847177 15.1680001,15.9847177 C14.951695,15.9847177 14.7443792,15.8981842 14.5922615,15.7444048 L12.2280367,13.3795141 C12.0176446,13.1749255 11.9336944,12.87291 12.0083264,12.5890942 C12.0829584,12.3052784 12.3046125,12.0836244 12.5884282,12.0089924 C12.872244,11.9343604 13.1742595,12.0183106 13.3788481,12.2287027 L15.7437388,14.5929274 C15.8973525,14.7451338 15.9837711,14.9524164 15.9837711,15.1686661 C15.9837711,15.3849158 15.8973525,15.5921984 15.7437388,15.7444048 L15.7437388,15.7444048 Z M6.97080009,13.9416065 C5.04612137,13.9416065 3.30392083,13.161739 2.04255697,11.9003751 L2.21171559,12.2293687 C0.845127102,10.8894193 0,8.8961448 0,6.97080009 C0,3.12077665 3.12077665,0 6.97080009,0 C10.8208235,0 13.9422661,3.12077665 13.9422661,6.97080009 C13.9422661,8.8961448 13.161739,10.6390113 11.8997092,11.9003751 C10.5937725,13.2094863 8.81991787,13.9440985 6.97080009,13.9416065 L6.97080009,13.9416065 Z M6.99277738,1.3319576 C3.86620904,1.33214151 1.3317737,3.86687503 1.3319576,6.99344337 C1.33214151,10.1200117 3.86687503,12.6544471 6.99344337,12.6542631 C10.1200117,12.6540792 12.6544471,10.1193457 12.6542631,6.99277738 C12.6540792,3.86620904 10.1193457,1.3317737 6.99277738,1.3319576 Z' fill='#929292' />
+                </g>
+              </g>
+            </g>
+          </svg>
+          <input className={classNames(classes.search)} ref={searchRef} />
+        </div>
         {createSignElement()}
       </div>
     </header>

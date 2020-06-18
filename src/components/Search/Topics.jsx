@@ -5,29 +5,46 @@ import RecommendWrapper from '@Components/Base/RecommendWrapper';
 import Loading from '@Components/Base/Loading';
 import ViewMore from '@Components/Base/ViewMore';
 import NoMoreData from '@Components/Base/NoMoreData';
-import AccountAction from '@Actions/account';
+import SearchAction from '@Actions/search';
 
-const Favorite = () => {
+const Topics = () => {
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
-  const { favorite, loading } = useSelector(state => ({
-    favorite: state.getIn(['account', 'favorite']),
-    loading: state.getIn(['account', 'loading']),
+  const { searchData, topic, loading } = useSelector(state => ({
+    searchData: state.getIn(['search', 'searchData']),
+    topic: state.getIn(['search', 'topic']),
+    loading: state.getIn(['search', 'loading']),
   }), shallowEqual);
-  const data = favorite.get('data');
-  const currentPage = favorite.get('current_page');
-  const lastPage = favorite.get('last_page');
-  const pageSize = favorite.get('per_page');
+  const data = topic.get('data');
+  const currentPage = topic.get('current_page');
+  const lastPage = topic.get('last_page');
+  const pageSize = topic.get('per_page');
 
   useEffect(() => {
     if (page !== 1) {
-      dispatch(AccountAction.fetchData({
-        type: 'FAVORITE',
+      dispatch(SearchAction.fetchData({
+        keywords: searchData,
+        search_type: 'TOPIC',
         page,
         page_size: pageSize,
       }));
     }
   }, [page]);
+
+  useEffect(() => {
+    setPage(1);
+    dispatch(SearchAction.clearData('TOPIC'));
+    dispatch(SearchAction.fetchData({
+      keywords: searchData,
+      search_type: 'TOPIC',
+      page: 1,
+      page_size: 10,
+    }));
+  }, [searchData]);
+
+  useEffect(() => () => {
+    dispatch(SearchAction.clearData('TOPIC'));
+  }, []);
 
   const handleChangeCurrentPage = () => {
     if (!loading) {
@@ -35,17 +52,15 @@ const Favorite = () => {
     }
   };
 
-  useEffect(() => () => {
-    dispatch(AccountAction.clearData('FAVORITE'));
-  }, []);
-
   const statusElement = () => {
     if (loading) {
       return <Loading />;
     }
+
     if (currentPage === lastPage) {
       return <NoMoreData />;
     }
+
     return <ViewMore onClick={() => handleChangeCurrentPage()} />;
   };
 
@@ -57,4 +72,4 @@ const Favorite = () => {
   );
 };
 
-export default Favorite;
+export default Topics;

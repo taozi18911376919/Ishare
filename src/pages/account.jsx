@@ -93,7 +93,7 @@ const useStyles = createUseStyles(({
     padding: [48, 0, 48, 48],
   },
 }), {
-  name: 'Author',
+  name: 'AccountPage',
 });
 
 const menuData = [
@@ -119,7 +119,7 @@ const menuData = [
   },
 ];
 
-const Author = props => {
+const AccountPage = props => {
   const { pageType, pathname } = props;
   const classes = useStyles();
 
@@ -184,16 +184,16 @@ const Author = props => {
   );
 };
 
-Author.propTypes = {
+AccountPage.propTypes = {
   pathname: PropTypes.string.isRequired,
   pageType: PropTypes.string,
 };
 
-Author.defaultProps = {
+AccountPage.defaultProps = {
   pageType: '',
 };
 
-Author.getInitialProps = async ctx => {
+AccountPage.getInitialProps = async ctx => {
   const { store, query: { pageType }, pathname } = ctx;
   const { token } = parseCookies(ctx);
   let type = 'TOPIC';
@@ -223,4 +223,4 @@ Author.getInitialProps = async ctx => {
   return { pageType, store, pathname };
 };
 
-export default Author;
+export default AccountPage;

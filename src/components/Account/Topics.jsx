@@ -40,11 +40,11 @@ const Topics = () => {
   };
 
   const statusElement = () => {
-    if (currentPage === lastPage) {
-      return <NoMoreData />;
-    }
     if (loading) {
       return <Loading />;
+    }
+    if (currentPage === lastPage) {
+      return <NoMoreData />;
     }
     return <ViewMore onClick={() => handleChangeCurrentPage()} />;
   };

@@ -6,6 +6,7 @@ const myRoutes = routes()
   .add('/signup', 'signup')
   .add('/author/:id', 'author')
   .add('/account/:pageType(contributes|favorites|notification)?', 'account')
-  .add('/topics/:id', 'topics');
+  .add('/topics/:id', 'topics')
+  .add('/search/:pageType(topics)?', 'search');
 
 module.exports = myRoutes;

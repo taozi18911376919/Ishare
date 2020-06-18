@@ -75,10 +75,10 @@ const useStyles = createUseStyles(({
     },
   },
 }), {
-  name: 'Topics',
+  name: 'TopicsPage',
 });
 
-const Topics = props => {
+const TopicsPage = props => {
   const { id } = props;
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
@@ -116,11 +116,11 @@ const Topics = props => {
   };
 
   const statusElement = () => {
-    if (currentPage === lastPage) {
-      return <NoMoreData />;
-    }
     if (topicLoading) {
       return <Loading />;
+    }
+    if (currentPage === lastPage) {
+      return <NoMoreData />;
     }
     return <ViewMore onClick={() => handleChangeCurrentPage()} />;
   };
@@ -159,7 +159,7 @@ const Topics = props => {
   );
 };
 
-Topics.getInitialProps = async ({ store, query }) => {
+TopicsPage.getInitialProps = async ({ store, query }) => {
   const { id } = query;
   await store.dispatch(TopicAction.fetchTopicData({
     topic_id: id,
@@ -172,8 +172,8 @@ Topics.getInitialProps = async ({ store, query }) => {
   };
 };
 
-Topics.propTypes = {
+TopicsPage.propTypes = {
   id: PropTypes.string.isRequired,
 };
 
-export default Topics;
+export default TopicsPage;

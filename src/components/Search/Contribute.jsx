@@ -5,14 +5,15 @@ import ContributeWrapper from '@Components/Base/ContributeWrapper';
 import Loading from '@Components/Base/Loading';
 import ViewMore from '@Components/Base/ViewMore';
 import NoMoreData from '@Components/Base/NoMoreData';
-import AccountAction from '@Actions/account';
+import SearchAction from '@Actions/search';
 
 const Contribute = () => {
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
-  const { contribute, loading } = useSelector(state => ({
-    contribute: state.getIn(['account', 'contribute']),
-    loading: state.getIn(['account', 'loading']),
+  const { searchData, contribute, loading } = useSelector(state => ({
+    searchData: state.getIn(['search', 'searchData']),
+    contribute: state.getIn(['search', 'contribute']),
+    loading: state.getIn(['search', 'loading']),
   }), shallowEqual);
   const data = contribute.get('data');
   const currentPage = contribute.get('current_page');
@@ -21,13 +22,25 @@ const Contribute = () => {
 
   useEffect(() => {
     if (page !== 1) {
-      dispatch(AccountAction.fetchData({
-        type: 'CONTRIBUTE',
+      dispatch(SearchAction.fetchData({
+        keywords: searchData,
+        search_type: 'CONTRIBUTE',
         page,
         page_size: pageSize,
       }));
     }
   }, [page]);
+
+  useEffect(() => {
+    setPage(1);
+    dispatch(SearchAction.clearData('CONTRIBUTE'));
+    dispatch(SearchAction.fetchData({
+      keywords: searchData,
+      search_type: 'CONTRIBUTE',
+      page: 1,
+      page_size: 10,
+    }));
+  }, [searchData]);
 
   const handleChangeCurrentPage = () => {
     if (!loading) {
@@ -36,13 +49,14 @@ const Contribute = () => {
   };
 
   useEffect(() => () => {
-    dispatch(AccountAction.clearData('CONTRIBUTE'));
+    dispatch(SearchAction.clearData('CONTRIBUTE'));
   }, []);
 
   const statusElement = () => {
     if (loading) {
       return <Loading />;
     }
+
     if (currentPage === lastPage) {
       return <NoMoreData />;
     }
