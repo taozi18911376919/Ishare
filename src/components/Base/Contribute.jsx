@@ -105,6 +105,7 @@ const useStyles = createUseStyles(({
     cursor: 'pointer',
     position: 'relative',
     '& button': {
+      backgroundColor: 'transparent',
       outline: 'none',
       border: 'none',
       display: 'flex',

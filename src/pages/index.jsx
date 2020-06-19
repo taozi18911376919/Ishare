@@ -1,18 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
-import { Link } from '@Server/routes';
 
 import CenterBlock from '@Components/Base/CenterBlock';
 import HomeCategory from '@Components/Home/Category';
 import HomeHotTopics from '@Components/Home/HotTopics';
 import HomeContributes from '@Components/Home/Contributes';
 import HomeRecommendTopics from '@Components/Home/RecommendTopics';
-import FloatLabelInput from '@Components/Base/FloatLabelInput';
-import TopicIcon from '@Components/Icon/Topic';
-import ContributeIcon from '@Components/Icon/Contribute';
-import NotificationIcon from '@Components/Icon/Notification';
-import FavoriteIcon from '@Components/Icon/Favorite';
-import RemindIcon from '@Components/Icon/Remind';
 
 import HomeAction from '@Actions/home';
 
@@ -40,19 +33,6 @@ const HomePage = () => {
         {!!hotTopic.size && <HomeHotTopics data={hotTopic} categoryId={categoryId} />}
         {!!latestContribute.size && <HomeContributes data={latestContribute} categoryId={categoryId} />}
         {!!recommendTopic.size && <HomeRecommendTopics data={recommendTopic} categoryId={categoryId} />}
-        <FloatLabelInput
-          name='email'
-          placeholder='Email'
-          value=''
-        />
-        <TopicIcon />
-        <ContributeIcon />
-        <NotificationIcon />
-        <FavoriteIcon />
-        <RemindIcon />
-        <Link route='/account'>
-          <a>account</a>
-        </Link>
       </>
     </CenterBlock>
   );

@@ -4,6 +4,7 @@ import { useSelector, shallowEqual } from 'react-redux';
 
 import ModuleTilt from '@Components/Base/ModuleTitle';
 import RecommendWrapper from '@Components/Base/RecommendWrapper';
+import TopicIcon from '@Components/Icon/Topic';
 
 const RecommendTopics = props => {
   const { data, categoryId } = props;
@@ -25,6 +26,7 @@ const RecommendTopics = props => {
   return (
     <>
       <ModuleTilt>
+        <span style={{ color: '#FFD666', marginRight: 8 }}><TopicIcon /></span>
         Topics you may like
         {categoryName && <small>#{categoryName}</small>}
       </ModuleTilt>

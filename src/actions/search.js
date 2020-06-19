@@ -1,5 +1,6 @@
 import Config from '@Config';
 import NetWork from '@Utils/network';
+import ToastAction from './toast';
 
 const prefix = 'SEARCH';
 
@@ -30,10 +31,10 @@ const fetchData = (query, header) => dispatch => {
           break;
       }
     })
-    .catch(err => dispatch({
-      type: SEARCH_FAILURE,
-      payload: err.message,
-    }));
+    .catch(error => {
+      const err = JSON.parse(error.message);
+      dispatch(ToastAction.openToast(err.keywords, 'danger'));
+    });
 };
 
 const clearData = type => dispatch => {

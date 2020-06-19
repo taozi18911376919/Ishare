@@ -3,18 +3,20 @@ import React, { useRef, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import Icon from '@mdi/react';
 import { mdiLogoutVariant } from '@mdi/js';
 
 import { Link } from '@Server/routes';
 import SignAction from '@Actions/sign';
 import SearchAction from '@Actions/search';
+import UiAction from '@Actions/ui';
 
 import TopicIcon from '@Components/Icon/Topic';
 import ContributeIcon from '@Components/Icon/Contribute';
 import NotificationIcon from '@Components/Icon/Notification';
 import FavoriteIcon from '@Components/Icon/Favorite';
+
 
 const useStyles = createUseStyles(({
   root: {
@@ -24,6 +26,8 @@ const useStyles = createUseStyles(({
     height: 68,
     padding: [0, 48],
     boxSizing: 'border-box',
+    position: 'relative',
+    zIndex: 9,
   },
   start: {
     display: 'flex',
@@ -184,6 +188,7 @@ const Header = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const searchRef = useRef(null);
+  const { pathname } = useRouter();
   const { user } = useSelector(state => ({
     user: state.getIn(['account', 'user']),
   }), shallowEqual);
@@ -235,24 +240,32 @@ const Header = () => {
     }
     return (
       <>
-        <Link route='/signin'>
-          <button
-            type='button'
-            className={classNames(classes.button, classes.signin)}
-          >
-            Log In
-          </button>
-        </Link>
-        <Link route='/signup'>
-          <button
-            type='button'
-            className={classNames(classes.button, classes.signup)}
-          >
-            Sign Up
-          </button>
-        </Link>
+        {pathname !== '/signin' && (
+          <Link route='/signin'>
+            <button
+              type='button'
+              className={classNames(classes.button, classes.signin)}
+            >
+              Log In
+            </button>
+          </Link>
+        )}
+        {pathname !== '/signup' && (
+          <Link route='/signup'>
+            <button
+              type='button'
+              className={classNames(classes.button, classes.signup)}
+            >
+              Sign Up
+            </button>
+          </Link>
+        )}
       </>
     );
+  };
+
+  const handleShowAddTopic = () => {
+    dispatch(UiAction.showModal('addTopic'));
   };
 
   return (
@@ -265,7 +278,7 @@ const Header = () => {
           </h1>
         </Link>
         { !!user.size && (
-          <button className={classNames(classes.button, classes.addTopics)} type='button'>
+          <button className={classNames(classes.button, classes.addTopics)} type='button' onClick={() => handleShowAddTopic()}>
             Add Topics
           </button>
         )}

@@ -88,7 +88,7 @@ const useStyles = createUseStyles(({
     'button, input, optgroup, select, textarea': {
       fontFamily: 'inherit',
       fontSize: '100%',
-      lineheight: '1.15',
+      lineHeight: '1.15',
       margin: 0,
     },
     'button, input': {

@@ -1,23 +1,20 @@
 import Config from '@Config';
 import NetWork from '@Utils/network';
 
-const prefix = 'CATEGORY';
+const prefix = 'ALL';
 
-const CATEGORY_REQUEST = `${prefix}_REQUEST`;
-const CATEGORY_SUCCESS = `${prefix}_SUCCESS`;
-const CATEGORY_FAILURE = `${prefix}_FAILURE`;
+const CATEGORY_SUCCESS = `${prefix}_CATEGORY_SUCCESS`;
+const CATEGORY_FAILURE = `${prefix}_CATEGORY_FAILURE`;
+
+const TOPIC_SUCCESS = `${prefix}_TOPIC_SUCCESS`;
+const TOPIC_FAILURE = `${prefix}_TOPIC_FAILURE`;
 
 const fetchCategory = () => dispatch => {
   try {
-    dispatch({ type: CATEGORY_REQUEST });
-    NetWork.post(`${Config.apiBaseUrl}/api/v1/category/all`).then(res => {
-      if (res && res.categorys) {
-        dispatch({
-          type: CATEGORY_SUCCESS,
-          payload: res.categorys,
-        });
-      }
-    });
+    NetWork.post(`${Config.apiBaseUrl}/api/v1/category/all`).then(res => dispatch({
+      type: CATEGORY_SUCCESS,
+      payload: res,
+    }));
   } catch (err) {
     dispatch({
       type: CATEGORY_FAILURE,
@@ -26,9 +23,23 @@ const fetchCategory = () => dispatch => {
   }
 };
 
+const fetchTopic = () => dispatch => {
+  try {
+    NetWork.post(`${Config.apiBaseUrl}/api/v1/topic/all`).then(res => dispatch({
+      type: TOPIC_SUCCESS,
+      payload: res,
+    }));
+  } catch (err) {
+    dispatch({
+      type: TOPIC_FAILURE,
+      payload: err.message,
+    });
+  }
+};
+
 export default {
-  CATEGORY_REQUEST,
   CATEGORY_SUCCESS,
-  CATEGORY_FAILURE,
+  TOPIC_SUCCESS,
   fetchCategory,
+  fetchTopic,
 };

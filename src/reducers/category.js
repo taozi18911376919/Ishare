@@ -2,30 +2,25 @@ import CategoryAvtion from '@Actions/category';
 import { fromJS } from 'immutable';
 import { combineReducers } from 'redux-immutable';
 
-const defaultState = fromJS([]);
-
-const data = (state = defaultState, action) => {
-  switch (action.type) {
+const categorys = (state = fromJS({}), { type, payload }) => {
+  switch (type) {
     case CategoryAvtion.CATEGORY_SUCCESS:
-      return fromJS(action.payload);
+      return payload.get('categorys');
     default:
       return state;
   }
 };
 
-const loading = (state = false, action) => {
-  switch (action.type) {
-    case CategoryAvtion.CATEGORY_REQUEST:
-      return true;
-    case CategoryAvtion.CATEGORY_FAILURE:
-    case CategoryAvtion.CATEGORY_SUCCESS:
-      return false;
+const topics = (state = fromJS({}), { type, payload }) => {
+  switch (type) {
+    case CategoryAvtion.TOPIC_SUCCESS:
+      return payload.get('topics');
     default:
       return state;
   }
 };
 
 export default combineReducers({
-  data,
-  loading,
+  categorys,
+  topics,
 });

@@ -13,6 +13,7 @@ import ViewMore from '@Components/Base/ViewMore';
 import NoMoreData from '@Components/Base/NoMoreData';
 
 import TopicAction from '@Actions/topic';
+import UiAction from '@Actions/ui';
 
 const mutilpellipsis = line => ({
   display: '-webkit-box',
@@ -69,9 +70,15 @@ const useStyles = createUseStyles(({
     backgroundColor: '#f5222d',
     borderRadius: 4,
     color: '#ffffff',
+    cursor: 'pointer',
     '& + &': {
       marginTop: 20,
       backgroundColor: '#1877f2',
+      '&:disabled': {
+        opacoty: 0.9,
+        ccursor: 'not-allowed',
+        pointerEvents: 'none',
+      },
     },
   },
 }), {
@@ -81,10 +88,17 @@ const useStyles = createUseStyles(({
 const TopicsPage = props => {
   const { id } = props;
   const [page, setPage] = useState(1);
+  const [disabled, setDisabled] = useState(false);
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const { topicInfo, contributes, topicLoading } = useSelector(state => ({
+  const {
+    user,
+    topicInfo,
+    contributes,
+    topicLoading,
+  } = useSelector(state => ({
+    user: state.getIn(['account', 'user']),
     topicLoading: state.getIn(['topic', 'loading']),
     topicInfo: state.getIn(['topic', 'topicInfo']),
     contributes: state.getIn(['topic', 'contributes']),
@@ -125,6 +139,27 @@ const TopicsPage = props => {
     return <ViewMore onClick={() => handleChangeCurrentPage()} />;
   };
 
+  useEffect(() => {
+    setDisabled(false);
+  }, [topicInfo.get('favorite_status')]);
+
+  const handleShowAddContribute = () => {
+    if (!user.get('name')) {
+      dispatch(UiAction.showModal('signin'));
+    } else {
+      dispatch(UiAction.showModal('addContribute'));
+    }
+  };
+
+  const handleChangeFavorate = () => {
+    if (!user.get('name')) {
+      dispatch(UiAction.showModal('signin'));
+    } else {
+      setDisabled(true);
+      dispatch(TopicAction.favorate({ topic_id: +id, type: topicInfo.get('favorite_status') }));
+    }
+  };
+
   const createTopicInfo = () => {
     if (topicInfo.size) {
       return (
@@ -137,8 +172,21 @@ const TopicsPage = props => {
             </Link>
           </div>
           <div className={classNames(classes.controls)}>
-            <button type='button' className={classNames(classes.control)}>Add contribute</button>
-            <button type='button' className={classNames(classes.control)}>Add contribute</button>
+            <button
+              type='button'
+              className={classNames(classes.control)}
+              onClick={handleShowAddContribute}
+            >
+              Add contribute
+            </button>
+            <button
+              type='button'
+              className={classNames(classes.control)}
+              onClick={handleChangeFavorate}
+              disabled={disabled}
+            >
+              {topicInfo.get('favorite_status') ? 'Cancel Favorate' : 'Favorate'}
+            </button>
           </div>
         </div>
       );
@@ -162,9 +210,9 @@ const TopicsPage = props => {
 TopicsPage.getInitialProps = async ({ store, query }) => {
   const { id } = query;
   await store.dispatch(TopicAction.fetchTopicData({
-    topic_id: id,
+    topic_id: +id,
     page: 1,
-    page_size: 1,
+    page_size: 10,
   }));
   return {
     id,

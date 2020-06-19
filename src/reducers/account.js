@@ -6,6 +6,8 @@ const user = (state = fromJS({}), { type, payload }) => {
   switch (type) {
     case AccountAction.ACCOUNT_USERINFO_SUCCESS:
       return payload.get('user_info');
+    case AccountAction.ACCOUNT_USERINFO_CLEAR:
+      return fromJS({});
     default:
       return state;
   }

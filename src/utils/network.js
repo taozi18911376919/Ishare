@@ -8,6 +8,7 @@ const network = axios.create({
 });
 
 network.interceptors.request.use(config => {
+  console.log(config);
   const { token } = parseCookies();
   const Authorization = token ? { Authorization: `Bearer ${token}` } : {};
   if (!('Authorization' in config.headers)) {
@@ -16,7 +17,11 @@ network.interceptors.request.use(config => {
       ...Authorization,
     };
   }
-  config.data = qs.stringify(config.data);
+  // eslint-disable-next-line no-undef
+  if (config.url.indexOf('upload-image') === -1) {
+    config.data = qs.stringify(config.data);
+  }
+
   return config;
 });
 

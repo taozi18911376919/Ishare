@@ -2,11 +2,13 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import Icon from '@mdi/react';
-import { mdiFacebook, mdiTwitter, mdiGoogleAds } from '@mdi/js';
+import { mdiFacebook, mdiTwitter, mdiGoogle } from '@mdi/js';
 
 const useStyles = createUseStyles(({
   root: {
     boxSizing: 'border-box',
+    padding: [48, 0],
+    backgroundColor: '#fafafb',
   },
   links: {
     listStyleType: 'none',
@@ -14,7 +16,9 @@ const useStyles = createUseStyles(({
     justifyContent: 'center',
   },
   linkItem: {
+    fontSize: 18,
     lineHeight: 1.5,
+    margin: [0, 16],
   },
   buttons: {
     display: 'flex',
@@ -28,8 +32,10 @@ const useStyles = createUseStyles(({
     border: 'none',
     overflow: 'hidden',
     backgroundColor: 'transparent',
+    cursor: 'pointer',
     padding: 0,
     '& + &': {
+      marginLeft: 24,
     },
   },
 }), {
@@ -54,7 +60,7 @@ const Footer = () => {
           <Icon path={mdiTwitter} size={1.5} />
         </button>
         <button className={classNames(classes.button)} type='button'>
-          <Icon path={mdiGoogleAds} size={1.5} />
+          <Icon path={mdiGoogle} size={1.5} />
         </button>
       </div>
     </footer>

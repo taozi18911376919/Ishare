@@ -10,6 +10,7 @@ import CenterBlock from '@Components/Base/CenterBlock';
 import AccountTopics from '@Components/Account/Topics';
 import AccountContribute from '@Components/Account/Contribute';
 import AccountFavorite from '@Components/Account/Favorite';
+import AccountNotification from '@Components/Account/Notification';
 import TopicIcon from '@Components/Icon/Topic';
 import ContributeIcon from '@Components/Icon/Contribute';
 import NotificationIcon from '@Components/Icon/Notification';
@@ -131,6 +132,8 @@ const AccountPage = props => {
         return <AccountContribute />;
       case 'favorites':
         return <AccountFavorite />;
+      case 'notification':
+        return <AccountNotification />;
       default:
         return <AccountTopics />;
     }

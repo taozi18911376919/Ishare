@@ -105,6 +105,7 @@ const FacebookLogin = () => {
           callback={responseFacebook}
           onFailure={handleFailure}
           onClick={handleClick}
+          cookie={process.env.NODE_ENV === 'production'}
           cssClass={classes.root}
           icon={<Icon path={mdiFacebook} size={1.25} />}
           textButton='Continue With Facebook'

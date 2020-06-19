@@ -10,6 +10,8 @@ import topic from '@Reducers/topic';
 import author from '@Reducers/author';
 import account from '@Reducers/account';
 import search from '@Reducers/search';
+import ui from '@Reducers/ui';
+import toast from '@Reducers/toast';
 
 const combinedReducer = combineReducers({
   category,
@@ -18,6 +20,8 @@ const combinedReducer = combineReducers({
   author,
   account,
   search,
+  ui,
+  toast,
 });
 
 

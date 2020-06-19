@@ -6,6 +6,7 @@ const prefix = 'ACCOUNT';
 const ACCOUNT_REQUEST = `${prefix}_REQUEST`;
 const ACCOUNT_FAILURE = `${prefix}_FAILURE`;
 const ACCOUNT_USERINFO_SUCCESS = `${prefix}_USERINFO_SUCCESS`;
+const ACCOUNT_USERINFO_CLEAR = `${prefix}_USERINFO_CLEAR`;
 const ACCOUNT_TOPIC_SUCCESS = `${prefix}_TOPIC_SUCCESS`;
 const ACCOUNT_NOTIFICATION_SUCCESS = `${prefix}_NOTIFICATION_SUCCESS`;
 const ACCOUNT_CONTRIBUTE_SUCCESS = `${prefix}_CONTRIBUTE_SUCCESS`;
@@ -19,6 +20,8 @@ const fetchUserData = (query, header) => dispatch => NetWork.post(`${Config.apiB
   { ...query },
   { headers: { ...header } })
   .then(data => dispatch({ type: ACCOUNT_USERINFO_SUCCESS, payload: data }));
+
+const clearUserData = () => dispatch => dispatch({ type: ACCOUNT_USERINFO_CLEAR });
 
 const fetchData = (query, header) => dispatch => {
   dispatch({ type: ACCOUNT_REQUEST });
@@ -47,6 +50,7 @@ const fetchData = (query, header) => dispatch => {
     }));
 };
 
+
 const clearData = type => dispatch => {
   switch (type) {
     case 'CONTRIBUTE':
@@ -65,6 +69,7 @@ const clearData = type => dispatch => {
 };
 
 export default {
+  ACCOUNT_USERINFO_CLEAR,
   ACCOUNT_USERINFO_SUCCESS,
   ACCOUNT_REQUEST,
   ACCOUNT_FAILURE,
@@ -79,4 +84,5 @@ export default {
   fetchUserData,
   fetchData,
   clearData,
+  clearUserData,
 };

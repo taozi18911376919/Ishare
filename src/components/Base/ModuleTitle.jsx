@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 
 const useStyles = createUseStyles(({
   root: {
+    display: 'flex',
+    alignItems: 'center',
     fontSize: 24,
     color: '#2c2c2c',
     lineHeight: 1.25,

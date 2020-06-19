@@ -5,6 +5,9 @@ import { useSelector, shallowEqual } from 'react-redux';
 import ModuleTilt from '@Components/Base/ModuleTitle';
 import ContributeWrapper from '@Components/Base/ContributeWrapper';
 
+import ContributeIcon from '@Components/Icon/Contribute';
+
+
 const Contributes = props => {
   const { data, categoryId } = props;
   const [categoryName, setCategoryName] = useState(undefined);
@@ -26,6 +29,7 @@ const Contributes = props => {
     <>
       <ModuleTilt>
         {/* eslint-disable-next-line max-len */}
+        <span style={{ color: '#FFD666', marginRight: 8 }}><ContributeIcon /></span>
         Lastest Contribute
         {categoryName && <small>#{categoryName}</small>}
       </ModuleTilt>

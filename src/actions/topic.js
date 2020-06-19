@@ -20,6 +20,12 @@ const fetchTopicData = query => dispatch => {
     });
 };
 
+const favorate = parmas => dispatch => {
+  const url = `${Config.apiBaseUrl}/api/v1/topic/${parmas.type ? 'cancel-favorite' : 'favorite'}`;
+  return NetWork.post(url, { topic_id: parmas.topic_id })
+    .then(() => dispatch(fetchTopicData({ topic_id: parmas.topic_id })));
+};
+
 const clearTopicData = () => dispatch => dispatch({ type: TOPIC_CLEAR });
 
 export default {
@@ -29,4 +35,5 @@ export default {
   TOPIC_CLEAR,
   fetchTopicData,
   clearTopicData,
+  favorate,
 };
