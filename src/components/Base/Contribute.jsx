@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import Router from 'next/router';
 
 import netWork from '@Utils/network';
 import Config from '@Config';
@@ -41,9 +42,26 @@ const useStyles = createUseStyles(({
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
+    position: 'relative',
   },
   top: {
-    display: 'none',
+    position: 'absolute',
+    left: 0,
+    top: 24,
+    width: '100%',
+    padding: [0, 24],
+    boxSizing: 'border-box',
+    display: 'flex',
+    justifyContent: 'space-between',
+    '& a': {
+      fontSize: 20,
+      color: '#1877F2',
+      cursor: 'pointer',
+    },
+    '& span': {
+      fontSize: 14,
+      color: '#929292',
+    },
   },
   picWrapper: {
     width: '100%',
@@ -189,6 +207,9 @@ const useStyles = createUseStyles(({
       marginTop: 12,
     },
   },
+  paddingTop: {
+    paddingTop: 68,
+  },
 }), {
   name: 'Contribute',
 });
@@ -197,6 +218,7 @@ const Contribute = props => {
   const { data, isColumn } = props;
   const classes = useStyles();
   const id = data.get('id');
+  const contributeId = data.get('contribute_id');
   const createdAt = data.get('created_at');
   const pic = data.get('pic');
   const title = data.get('title');
@@ -213,7 +235,7 @@ const Contribute = props => {
       return;
     }
     netWork.post(`${Config.apiBaseUrl}/api/v1/contribute/like-dislike`, {
-      contribute_id: id,
+      contribute_id: contributeId || id,
       type,
     }).then(res => {
       if (res) {
@@ -283,12 +305,19 @@ const Contribute = props => {
     </div>
   );
 
+  const handleReadNotification = topId => {
+    Router.push(`/topics/${topId}`);
+    netWork.post(`${Config.apiBaseUrl}/api/v1/notification/read`, {
+      notification_id: id,
+    });
+  };
+
   const createFromTopicFitnessElement = () => {
     if (!isColumn) {
       return (
         <div className={classNames(classes.fromTopicFitness)}>
           {createFromElement}
-          <a className={classNames(classes.topicFitness)}>From TopicFitness</a>
+          <a className={classNames(classes.topicFitness)} onClick={() => handleReadNotification(data.get('topic_id'))}>From TopicFitness</a>
         </div>
 
       );
@@ -296,55 +325,61 @@ const Contribute = props => {
     return <></>;
   };
 
-
   return (
-    <div
-      className={classNames({
-        [classes.root]: true,
-        [classes.row]: !isColumn,
-      })}
-    >
-      <div className={classNames(classes.picWrapper)}>
-        <a
-          href={data.get('from_url')}
-          target='_blank'
-          rel='noreferrer'
-        >
-          <img className={classNames(classes.pic)} src={pic} alt='' />
-        </a>
-      </div>
-      <div className={classNames(classes.content)}>
-        {createTitle()}
-        {isColumn && createFromElement}
-        <p className={classNames(classes.desc)}>{data.get('description')}</p>
-        {createFromTopicFitnessElement()}
-        <div className={classNames(classes.controls)}>
-          <div className={classNames(classes.control)}>
-            <button
-              type='button'
-              className={classNames(classes.control)}
-              style={{ color: '#f5222d' }}
-              onClick={() => handleChangeLike('LIKE')}
-            >
-              <span className={classNames({ [classes.add]: true, [classes.fadeIn]: add })}>+1</span>
-              <LikeIcon />
-            </button>
-            <span className={classNames(classes.position)}>{like}</span>
-          </div>
-          <div className={classNames(classes.control)}>
-            <button
-              type='button'
-              className={classNames(classes.control, classes.position)}
-              onClick={() => handleChangeLike('DISLIKE')}
-            >
-              <span className={classNames({ [classes.subtract]: true, [classes.fadeIn]: subtract })}>-1</span>
-              <DisLikeIcon />
-            </button>
-            <span>-{dislike}</span>
+    <>
+      <div
+        className={classNames({
+          [classes.root]: true,
+          [classes.row]: !isColumn,
+          [classes.paddingTop]: data.get('topic_title'),
+        })}
+      >
+        <div className={classNames(classes.top)}>
+          <a onClick={() => handleReadNotification(data.get('topic_id'))}>{data.get('topic_title')}</a>
+          <span>Updated: {data.get('topic_updated_time')}</span>
+        </div>
+        <div className={classNames(classes.picWrapper)}>
+          <a
+            href={data.get('from_url')}
+            target='_blank'
+            rel='noreferrer'
+          >
+            <img className={classNames(classes.pic)} src={pic} alt='' />
+          </a>
+        </div>
+        <div className={classNames(classes.content)}>
+          {createTitle()}
+          {isColumn && createFromElement}
+          <p className={classNames(classes.desc)}>{data.get('description')}</p>
+          {createFromTopicFitnessElement()}
+          <div className={classNames(classes.controls)}>
+            <div className={classNames(classes.control)}>
+              <button
+                type='button'
+                className={classNames(classes.control)}
+                style={{ color: '#f5222d' }}
+                onClick={() => handleChangeLike('LIKE')}
+              >
+                <span className={classNames({ [classes.add]: true, [classes.fadeIn]: add })}>+1</span>
+                <LikeIcon />
+              </button>
+              <span className={classNames(classes.position)}>{like}</span>
+            </div>
+            <div className={classNames(classes.control)}>
+              <button
+                type='button'
+                className={classNames(classes.control, classes.position)}
+                onClick={() => handleChangeLike('DISLIKE')}
+              >
+                <span className={classNames({ [classes.subtract]: true, [classes.fadeIn]: subtract })}>-1</span>
+                <DisLikeIcon />
+              </button>
+              <span>-{dislike}</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

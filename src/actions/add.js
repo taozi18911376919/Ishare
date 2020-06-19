@@ -13,7 +13,7 @@ const addContribute = (params, formikBag) => dispatch => {
     ...params,
   })
     .then(() => {
-      dispatch(ToastAction.openToast('Add Contribute Success'));
+      dispatch(ToastAction.openToast('Add Contribute Success', 'success'));
       setSubmitting(false);
       dispatch(UiAction.closeModal());
     })
@@ -33,7 +33,7 @@ const addTopic = (params, formikBag) => dispatch => {
     ...params,
   })
     .then(() => {
-      dispatch(ToastAction.openToast('Add Topic Success'));
+      dispatch(ToastAction.openToast('Add Topic Success', 'success'));
       setSubmitting(false);
       dispatch(UiAction.closeModal());
     })

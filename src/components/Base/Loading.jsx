@@ -21,6 +21,7 @@ const useStyles = createUseStyles(({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    boxSizing: 'border-box',
   },
   loading: {
     animation: 'loading 1s linear infinite',

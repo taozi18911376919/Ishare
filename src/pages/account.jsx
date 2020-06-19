@@ -31,7 +31,6 @@ const useStyles = createUseStyles(({
     backgroundColor: '#ffffff',
     padding: [24, 0],
     boxShadow: '5px 25px 34px 0px rgba(176,176,176,0.35)',
-    marginBottom: 68,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -64,7 +63,7 @@ const useStyles = createUseStyles(({
   side: {
     listStyleType: 'none',
     margin: 0,
-    padding: [48, 0],
+    padding: [24, 0],
     borderRight: '1px solid #cfcfcf',
     flexShrink: 0,
   },

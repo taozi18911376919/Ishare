@@ -8,7 +8,6 @@ const network = axios.create({
 });
 
 network.interceptors.request.use(config => {
-  console.log(config);
   const { token } = parseCookies();
   const Authorization = token ? { Authorization: `Bearer ${token}` } : {};
   if (!('Authorization' in config.headers)) {

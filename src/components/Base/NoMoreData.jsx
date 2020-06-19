@@ -9,6 +9,7 @@ const useStyles = createUseStyles(({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    boxSizing: 'border-box',
   },
 }), {
   name: 'NoMoreData',
