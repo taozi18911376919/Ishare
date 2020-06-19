@@ -4,6 +4,7 @@ import SignInForm from '@Components/Form/SignInForm';
 import { createUseStyles } from 'react-jss';
 import Router, { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
+import Config from '@Config';
 
 const useStyles = createUseStyles(({
   root: {
@@ -37,7 +38,7 @@ const SignInPage = () => {
     if (router.query.token) {
       global.window.postMessage({
         token: router.query.token,
-      }, 'http://localhost:3006');
+      }, Config.host);
     }
   }, [router]);
 

@@ -5,7 +5,7 @@ import Icon from '@mdi/react';
 import { mdiLoading, mdiTwitter } from '@mdi/js';
 import { useDispatch } from 'react-redux';
 
-// import Config from '@Config';
+import Config from '@Config';
 
 import SignAction from '@Actions/sign';
 
@@ -77,13 +77,13 @@ const TwitterLogin = () => {
 
   const handleClick = () => {
     const newWindow = global.window.open(
-      'http://localhost:3006/signin?token=1270170793343778817-kQETD7SdTjBTfeWJEK87II6HWGPxrW',
+      `${Config.apiBaseUrl}/twitter`,
       '',
       'height=500, width=800, top=100, left=100, toolbar=no, menubar=no, scrollbars=no,resizable=no, location=no, status=no',
     );
 
     newWindow.addEventListener('message', ({ origin, data }) => {
-      if (origin === 'http://localhost:3006' && 'token' in data) {
+      if (origin === Config.host && 'token' in data) {
         dispatch(SignAction.twitterSign({
           token: data.token,
         }));
