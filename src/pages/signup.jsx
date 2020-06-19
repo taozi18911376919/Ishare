@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import SignUpForm from '@Components/Form/SignUpForm';
 import { createUseStyles } from 'react-jss';
 import Router from 'next/router';
 import { parseCookies } from 'nookies';
+import { useDispatch } from 'react-redux';
+
+import UiAction from '@Actions/ui';
 
 const useStyles = createUseStyles(({
   root: {
@@ -27,6 +30,12 @@ const useStyles = createUseStyles(({
 
 const SignUpPage = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(UiAction.closeModal());
+  }, []);
+
   return (
     <div className={classNames(classes.root)}>
       <h2 className={classes.title}>Sign Up</h2>

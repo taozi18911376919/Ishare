@@ -6,6 +6,8 @@ import { createUseStyles } from 'react-jss';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
 
+import { Link } from '@Server/routes';
+
 import SignAction from '@Actions/sign';
 import UiAction from '@Actions/ui';
 import FloatLabelInput from '@Components/Base/FloatLabelInput';
@@ -194,7 +196,10 @@ const SignInForm = () => {
       <FacebookLogin />
       <TwitterLogin />
       <p className={classNames(classes.text)}>
-        <a>Sign Up With Email</a>, by Signing up you indicate that you have read and agree to Terms of service and Privacy policy.
+        <Link route='/signup'>
+          <a>Sign Up With Email</a>
+        </Link>
+        , by Signing up you indicate that you have read and agree to Terms of service and Privacy policy.
       </p>
       <p className={classNames(classes.text)}>
         <a>Terms of service</a>And<a>Privacy policy</a>
