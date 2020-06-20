@@ -83,6 +83,7 @@ const TwitterLogin = () => {
     );
 
     newWindow.addEventListener('message', ({ origin, data }) => {
+      console.log(origin, data.token);
       if (origin === Config.host && 'token' in data) {
         dispatch(SignAction.twitterSign({
           token: data.token,

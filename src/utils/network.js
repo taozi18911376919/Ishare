@@ -3,9 +3,7 @@ import { parseCookies } from 'nookies';
 import { fromJS } from 'immutable';
 import qs from 'qs';
 
-const network = axios.create({
-  withCredentials: process.env.NODE_ENV === 'production',
-});
+const network = axios.create();
 
 network.interceptors.request.use(config => {
   const { token } = parseCookies();

@@ -312,19 +312,6 @@ const Contribute = props => {
     });
   };
 
-  const createFromTopicFitnessElement = () => {
-    if (!isColumn) {
-      return (
-        <div className={classNames(classes.fromTopicFitness)}>
-          {createFromElement}
-          <a className={classNames(classes.topicFitness)} onClick={() => handleReadNotification(data.get('topic_id'))}>From TopicFitness</a>
-        </div>
-
-      );
-    }
-    return <></>;
-  };
-
   return (
     <>
       <div
@@ -334,10 +321,12 @@ const Contribute = props => {
           [classes.paddingTop]: data.get('topic_title'),
         })}
       >
-        <div className={classNames(classes.top)}>
-          <a onClick={() => handleReadNotification(data.get('topic_id'))}>{data.get('topic_title')}</a>
-          <span>Updated: {data.get('topic_updated_time')}</span>
-        </div>
+        {data.get('topic_title') && (
+          <div className={classNames(classes.top)}>
+            <a onClick={() => handleReadNotification(data.get('topic_id'))}>{data.get('topic_title')}</a>
+            <span>Updated: {data.get('topic_updated_time')}</span>
+          </div>
+        )}
         <div className={classNames(classes.picWrapper)}>
           <a
             href={data.get('from_url')}
@@ -351,7 +340,7 @@ const Contribute = props => {
           {createTitle()}
           {isColumn && createFromElement}
           <p className={classNames(classes.desc)}>{data.get('description')}</p>
-          {createFromTopicFitnessElement()}
+          {!isColumn && createFromElement}
           <div className={classNames(classes.controls)}>
             <div className={classNames(classes.control)}>
               <button

@@ -36,6 +36,8 @@ const useStyles = createUseStyles(({
     width: 114,
     height: 114,
     objectFit: 'cover',
+    borderRadius: 4,
+    boxShadow: '0 0 6px rgba(0,0,0,.5)',
   },
   content: {
     flexShrink: 0,

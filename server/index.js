@@ -1,6 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-console */
-const path = require('path');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
 const cluster = require('cluster');
@@ -32,7 +31,6 @@ if (cluster.isMaster) {
 } else {
   app.prepare().then(() => {
     const server = express();
-    server.use(express.static(path.join(__dirname, '../public/static')));
     server.use(cookieParser());
     server.use(compression());
     server.use(helmet());
