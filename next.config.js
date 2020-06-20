@@ -24,7 +24,7 @@ const nextConfig = withBundleAnalyzer({
   publicRuntimeConfig: {
     API_BASE_URL: process.env.API_BASE_URL,
     FACEBOOK_APPID: process.env.FACEBOOK_APPID,
-    HOST: process.env.HOST
+    HOST: process.env.HOST,
   },
 });
 

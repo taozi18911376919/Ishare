@@ -4,7 +4,7 @@ const {
   publicRuntimeConfig: {
     API_BASE_URL,
     FACEBOOK_APPID,
-    HOST
+    HOST,
   },
 } = getConfig();
 
