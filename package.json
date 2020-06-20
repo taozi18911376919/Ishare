@@ -1,7 +1,7 @@
 {
   "name": "ishare",
   "version": "1.0.0",
-  "main": "dist/server/index.js",
+  "main": "server/index.js",
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development node --trace-warnings server/index.js",
