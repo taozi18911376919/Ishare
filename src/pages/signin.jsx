@@ -35,6 +35,10 @@ const SignInPage = () => {
   const router = useRouter();
 
   useEffect(() => {
+    require('hellojs/dist/hello.all');
+  }, []);
+
+  useEffect(() => {
     if (router.query.token) {
       global.window.postMessage({
         token: router.query.token,

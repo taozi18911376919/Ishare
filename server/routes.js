@@ -2,6 +2,7 @@ const routes = require('next-routes');
 
 const myRoutes = routes()
   .add('/', '/')
+  .add('/redirect', 'redirect')
   .add('/signin', 'signin')
   .add('/signup', 'signup')
   .add('/author/:id', 'author')

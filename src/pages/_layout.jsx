@@ -22,7 +22,7 @@ const useStyles = createUseStyles(({
   name: 'Layout',
 });
 
-const Layout = ({ children }) => {
+const Layout = ({ children, pathname }) => {
   const classes = useStyles();
   const { toast, show } = useSelector(state => ({
     toast: state.getIn(['toast']),
@@ -47,11 +47,11 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <Header />
+      {pathname !== '/redirect' && <Header />}
       <main className={classNames(classes.root)}>
         { children }
       </main>
-      <Footer />
+      {pathname !== '/redirect' && <Footer />}
       {modalElement()}
       {toast.get('content') && <Toast />}
     </>
@@ -64,6 +64,7 @@ Layout.propTypes = {
     PropTypes.node,
     PropTypes.string,
   ]).isRequired,
+  pathname: PropTypes.string.isRequired,
 };
 
 export default Layout;

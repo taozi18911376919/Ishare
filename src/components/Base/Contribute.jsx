@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 
 import netWork from '@Utils/network';
 import Config from '@Config';
@@ -216,6 +216,7 @@ const useStyles = createUseStyles(({
 
 const Contribute = props => {
   const { data, isColumn } = props;
+  const router = useRouter();
   const classes = useStyles();
   const id = data.get('id');
   const contributeId = data.get('contribute_id');
@@ -268,6 +269,15 @@ const Contribute = props => {
     }
   }, [dislike]);
 
+
+  const handleOnClickReadNotification = () => {
+    if (router.query.pageType === 'notification') {
+      netWork.post(`${Config.apiBaseUrl}/api/v1/notification/read`, {
+        notification_id: id,
+      });
+    }
+  };
+
   const createTitle = () => {
     if (!isColumn) {
       return (
@@ -279,6 +289,7 @@ const Contribute = props => {
         href={data.get('from_url')}
         target='_blank'
         rel='noreferrer'
+        onClick={handleOnClickReadNotification}
       >
         <h3 className={classNames(classes.title)} title={title}>{title}</h3>
       </a>
@@ -293,6 +304,7 @@ const Contribute = props => {
         href={data.get('from_url')}
         target='_blank'
         rel='noreferrer'
+        onClick={handleOnClickReadNotification}
       >
         {data.get('from_url')}
       </a>
@@ -307,9 +319,11 @@ const Contribute = props => {
 
   const handleReadNotification = topId => {
     Router.push(`/topics/${topId}`);
-    netWork.post(`${Config.apiBaseUrl}/api/v1/notification/read`, {
-      notification_id: id,
-    });
+    if (router.query.pageType === 'notification') {
+      netWork.post(`${Config.apiBaseUrl}/api/v1/notification/read`, {
+        notification_id: id,
+      });
+    }
   };
 
   return (
@@ -324,7 +338,7 @@ const Contribute = props => {
         {data.get('topic_title') && (
           <div className={classNames(classes.top)}>
             <a onClick={() => handleReadNotification(data.get('topic_id'))}>{data.get('topic_title')}</a>
-            <span>Updated: {data.get('topic_updated_time')}</span>
+            { data.get('topic_updated_time') && <span>Updated: {data.get('topic_updated_time')}</span> }
           </div>
         )}
         <div className={classNames(classes.picWrapper)}>
@@ -332,6 +346,7 @@ const Contribute = props => {
             href={data.get('from_url')}
             target='_blank'
             rel='noreferrer'
+            onClick={handleOnClickReadNotification}
           >
             <img className={classNames(classes.pic)} src={pic} alt='' />
           </a>

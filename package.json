@@ -21,6 +21,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "formik": "^2.1.4",
+    "hellojs": "^1.18.4",
     "helmet": "^3.22.0",
     "immutable": "^4.0.0-rc.12",
     "murmurhash": "^1.0.0",
@@ -38,6 +39,7 @@
     "react-jss": "^10.2.0",
     "react-redux": "^7.2.0",
     "react-select": "^3.1.0",
+    "react-twitter-login": "^1.1.2",
     "redux": "^4.0.5",
     "redux-immutable": "^4.0.0",
     "redux-thunk": "^2.3.0"

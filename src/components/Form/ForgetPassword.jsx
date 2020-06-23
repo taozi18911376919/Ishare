@@ -212,7 +212,6 @@ const ForgetPassword = () => {
       const err = JSON.parse(error.message);
       setDisabled(false);
       Object.keys(err).map(item => setFieldError(item, err[item][0]));
-      // setSubmitting(false);
     });
   };
 
@@ -269,7 +268,7 @@ const ForgetPassword = () => {
           </div>
           <div className={classNames(classes.field)}>
             <button type='submit' disabled={isSubmitting} className={classNames(classes.submit)}>
-              <span>Forget Password</span>
+              <span>Reset Password</span>
               {isSubmitting && (
                 <span className={classNames(classes.loading)}>
                   <Icon path={mdiLoading} size={1} />

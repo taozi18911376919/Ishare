@@ -3,6 +3,7 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
+import { parseCookies } from 'nookies';
 
 import { Link } from '@Server/routes';
 
@@ -158,7 +159,7 @@ const TopicsPage = props => {
       dispatch(UiAction.showModal('signin'));
     } else {
       setDisabled(true);
-      dispatch(TopicAction.favorate({ topic_id: +id, type: topicInfo.get('favorite_status') }));
+      dispatch(TopicAction.favorate({ topic_id: +id, type: Boolean(!topicInfo.get('favorite_status')) }));
     }
   };
 
@@ -209,12 +210,15 @@ const TopicsPage = props => {
   );
 };
 
-TopicsPage.getInitialProps = async ({ store, query }) => {
-  const { id } = query;
+TopicsPage.getInitialProps = async ctx => {
+  const { store, query: { id } } = ctx;
+  const { token } = parseCookies(ctx);
   await store.dispatch(TopicAction.fetchTopicData({
     topic_id: +id,
     page: 1,
     page_size: 10,
+  }, {
+    Authorization: `Bearer ${token}`,
   }));
   return {
     id,

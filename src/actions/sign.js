@@ -77,8 +77,8 @@ const forgetPassword = (params, formikBag) => dispatch => {
       if (global.window.location.href.indexOf('/signin') !== -1) {
         Router.push('/account');
       } else {
-        dispatch(AccountAction.fetchUserData({ type: 'TOPIC' }));
         dispatch(UiAction.closeModal());
+        dispatch(AccountAction.fetchUserData({ type: 'TOPIC' }));
       }
     })
     .catch(error => {

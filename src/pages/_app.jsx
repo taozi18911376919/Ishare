@@ -28,6 +28,7 @@ Router.events.on('routeChangeError', () => NProgress.done());
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
+    console.log();
     const { token } = parseCookies(ctx);
     const state = ctx.store.getState();
     if (token && !state.getIn(['account', 'user', 'name'])) {
@@ -43,6 +44,7 @@ class MyApp extends App {
       pageProps: {
         ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {}),
         store: ctx.store,
+        pathname: ctx.pathname,
       },
     };
   }
@@ -65,7 +67,7 @@ class MyApp extends App {
       <JssProvider generateId={generateClassName}>
         <Provider store={store}>
           <CssBaseline />
-          <Layout>
+          <Layout pathname={pageProps.pathname}>
             <Component {...pageProps} />
           </Layout>
         </Provider>

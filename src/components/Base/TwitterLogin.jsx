@@ -4,9 +4,7 @@ import classNames from 'classnames';
 import Icon from '@mdi/react';
 import { mdiLoading, mdiTwitter } from '@mdi/js';
 import { useDispatch } from 'react-redux';
-
 import Config from '@Config';
-
 import SignAction from '@Actions/sign';
 
 const useStyles = createUseStyles(({
@@ -72,26 +70,32 @@ const useStyles = createUseStyles(({
 
 const TwitterLogin = () => {
   const classes = useStyles();
-  const [isLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    const newWindow = global.window.open(
-      `${Config.apiBaseUrl}/twitter`,
-      '',
-      'height=500, width=800, top=100, left=100, toolbar=no, menubar=no, scrollbars=no,resizable=no, location=no, status=no',
-    );
+    const hello = require('hellojs/dist/hello.all.js');
+    hello.init({
+      twitter: Config.twitterAppid,
+    },
+    {
+      scope: 'email',
+      redirect_uri: '/redirect',
+      oauth_proxy: 'https://auth-server.herokuapp.com/proxy',
+    });
+    setIsLoading(true);
 
-    newWindow.addEventListener('message', ({ origin, data }) => {
-      console.log(origin, data.token);
-      if (origin === Config.host && 'token' in data) {
+    hello('twitter').login().then(res => {
+      hello('twitter').api('me').then(() => {
         dispatch(SignAction.twitterSign({
-          token: data.token,
+          token: res.authResponse.oauth_token,
         }));
-        newWindow.close();
-      }
+      });
+    }, () => {
+      setIsLoading(false);
     });
   };
+
 
   return (
     <button type='button' disabled={isLoading} className={classNames(classes.submit)} onClick={handleClick}>

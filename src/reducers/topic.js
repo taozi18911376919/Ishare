@@ -6,6 +6,8 @@ const topicInfo = (state = fromJS({}), { type, payload }) => {
   switch (type) {
     case TopicAction.TOPIC_CLEAR:
       return fromJS({});
+    case TopicAction.TOPIC_FAVORITE:
+      return state.merge(payload);
     case TopicAction.TOPIC_SUCCESS:
       return payload.get('topic_info');
     default:
