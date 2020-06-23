@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import SignInForm from '@Components/Form/SignInForm';
 import { createUseStyles } from 'react-jss';
-import Router, { useRouter } from 'next/router';
+import Router from 'next/router';
 import { parseCookies } from 'nookies';
-import Config from '@Config';
 
 const useStyles = createUseStyles(({
   root: {
@@ -32,23 +31,6 @@ const useStyles = createUseStyles(({
 
 const SignInPage = () => {
   const classes = useStyles();
-  const router = useRouter();
-
-  useEffect(() => {
-    require('hellojs/dist/hello.all');
-  }, []);
-
-  useEffect(() => {
-    if (router.query.token) {
-      global.window.postMessage({
-        token: router.query.token,
-      }, Config.host);
-    }
-  }, [router]);
-
-  if (router.query.token) {
-    return <></>;
-  }
 
   return (
     <div className={classNames(classes.root)}>
