@@ -108,7 +108,7 @@ const facebookSign = params => dispatch => NetWork.post(`${Config.apiBaseUrl}/ap
     }
   });
 
-const twitterSign = params => dispatch => NetWork.post(`${Config.apiBaseUrl}/api/v1/user/twitter-signup`, {
+const twitterSign = params => () => NetWork.post(`${Config.apiBaseUrl}/api/v1/user/twitter-signup`, {
   ...params,
 })
   .then(data => {
@@ -116,11 +116,12 @@ const twitterSign = params => dispatch => NetWork.post(`${Config.apiBaseUrl}/api
       path: '/',
       maxAge: 100 * 365 * 24 * 60 * 60,
     });
-    if (global.window.location.href.indexOf('/signin') !== -1) {
-      Router.push('/account');
+    const redirect = global.window.localStorage.getItem('redirect');
+    if (redirect) {
+      Router.push(`${decodeURIComponent(redirect)}`);
+      global.window.localStorage.removeItem('redirect');
     } else {
-      dispatch(AccountAction.fetchUserData({ type: 'TOPIC' }));
-      dispatch(UiAction.closeModal());
+      Router.push('/account');
     }
   });
 

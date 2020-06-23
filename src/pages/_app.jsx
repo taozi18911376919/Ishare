@@ -28,7 +28,6 @@ Router.events.on('routeChangeError', () => NProgress.done());
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
-    console.log();
     const { token } = parseCookies(ctx);
     const state = ctx.store.getState();
     if (token && !state.getIn(['account', 'user', 'name'])) {
