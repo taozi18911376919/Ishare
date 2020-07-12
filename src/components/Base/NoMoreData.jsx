@@ -16,7 +16,7 @@ const useStyles = createUseStyles(({
 const NoMoreData = () => {
   const classes = useStyles();
   return (
-    <button type='button' className={classNames(classes.root, css.button, css['is-white'], css['medium'])}>
+    <button type='button' className={classNames(classes.root, css.button, css['is-white'], css['is-medium'])}>
       No More Data
     </button>
   );
