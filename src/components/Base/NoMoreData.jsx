@@ -2,27 +2,24 @@ import React from 'react';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 
+import css from '@Assets/sass/custom.sass';
+
 const useStyles = createUseStyles(({
   root: {
-    width: '100%',
-    padding: 24,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    boxSizing: 'border-box',
+    display: 'block',
+    margin: [24, 'auto'],
   },
 }), {
-  name: 'NoMoreData',
+  name: 'ViewMore',
 });
 
 const NoMoreData = () => {
   const classes = useStyles();
   return (
-    <div className={classNames(classes.root)}>
+    <button type='button' className={classNames(classes.root, css.button, css['is-white'], css['medium'])}>
       No More Data
-    </div>
+    </button>
   );
 };
-
 
 export default NoMoreData;

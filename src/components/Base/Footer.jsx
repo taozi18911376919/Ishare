@@ -55,10 +55,21 @@ const Footer = () => {
   return (
     <footer className={classNames(classes.root)}>
       <ul className={classNames(classes.links)}>
-        <li className={classNames(classes.linkItem)}>ABOUT US</li>
-        <li className={classNames(classes.linkItem)}>TERM OF USE</li>
-        <li className={classNames(classes.linkItem)}>PRIVACY POLICY</li>
-        <li className={classNames(classes.linkItem)}>FOLLOW US?</li>
+        <li className={classNames(classes.linkItem)}>
+          <a className={classNames(classes.button)} href='/about' target='_blank' rel='noopener noreferrer'>
+            ABOUT US
+          </a>
+        </li>
+        <li className={classNames(classes.linkItem)}>
+          <a className={classNames(classes.button)} href='/terms' target='_blank' rel='noopener noreferrer'>
+            TERM OF USE
+          </a>
+        </li>
+        <li className={classNames(classes.linkItem)}>
+          <a className={classNames(classes.button)} href='/privacy-policy' target='_blank' rel='noopener noreferrer'>
+            PRIVACY POLICY
+          </a>
+        </li>
       </ul>
       <div className={classNames(classes.buttons)}>
         <a className={classNames(classes.button)} href={seoData.get('facebook')} target='_blank' rel='noopener noreferrer'>

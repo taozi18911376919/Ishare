@@ -81,6 +81,7 @@ class MyApp extends App {
             <title>{seoData.get('seo_title')}</title>
             <meta name='keywords' content={seoData.get('seo_keywords')} />
             <meta name='description' content={seoData.get('seo_description')} />
+            <link rel='shortcut icon' href={seoData.get('logo')} />
           </Head>
           <CssBaseline />
           <Layout pathname={pageProps.pathname}>

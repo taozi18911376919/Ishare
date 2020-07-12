@@ -3,17 +3,12 @@ import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 import PropTypes from 'prop-types';
 
+import css from '@Assets/sass/custom.sass';
+
 const useStyles = createUseStyles(({
   root: {
-    outline: 'none',
-    border: 'none',
-    padding: ['0.5em', '2em'],
-    borderRadius: 4,
-    backgroundColor: '#1877f2',
     display: 'block',
     margin: [24, 'auto'],
-    cursor: 'pointer',
-    color: '#ffffff',
   },
 }), {
   name: 'ViewMore',
@@ -24,7 +19,7 @@ const ViewMore = ({ onClick }) => {
   return (
     <button
       type='button'
-      className={classNames(classes.root)}
+      className={classNames(classes.root, css.button, css['is-link'], css['is-medium'])}
       onClick={() => onClick()}
     >
       View more

@@ -3,6 +3,8 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 
+import css from '@Assets/sass/custom.sass';
+
 import UiAction from '@Actions/ui';
 import RecommendWrapper from '@Components/Base/RecommendWrapper';
 import Loading from '@Components/Base/Loading';
@@ -13,19 +15,7 @@ import AccountAction from '@Actions/account';
 const useStyles = createUseStyles(({
   control: {
     display: 'block',
-    outline: 'none',
-    width: 160,
-    height: 40,
-    lineHeight: '40px',
-    fontSize: 16,
-    border: 0,
-    textAlign: 'center',
-    padding: 0,
     margin: [20, 'auto', 36],
-    backgroundColor: '#1877f2',
-    borderRadius: 4,
-    color: '#ffffff',
-    cursor: 'pointer',
   },
 }), {
   name: 'Account-Topics',
@@ -82,7 +72,7 @@ const Topics = () => {
     <>
       <button
         type='button'
-        className={classNames(classes.control)}
+        className={classNames(css.button, css['is-link'], classes.control)}
         onClick={showAddTopicModal}
       >
         Add Topic

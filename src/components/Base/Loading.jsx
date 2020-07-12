@@ -1,20 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
-import Icon from '@mdi/react';
-import { mdiLoading } from '@mdi/js';
 import { createUseStyles } from 'react-jss';
 
+import css from '@Assets/sass/custom.sass';
+
 const useStyles = createUseStyles(({
-  '@global': {
-    '@keyframes loading': {
-      from: {
-        transform: 'rotate(0deg)',
-      },
-      to: {
-        transform: 'rotate(360deg)',
-      },
-    },
-  },
   root: {
     width: '100%',
     padding: 24,
@@ -22,9 +12,6 @@ const useStyles = createUseStyles(({
     justifyContent: 'center',
     alignItems: 'center',
     boxSizing: 'border-box',
-  },
-  loading: {
-    animation: 'loading 1s linear infinite',
   },
 }), {
   name: 'Loading',
@@ -34,9 +21,7 @@ const Loading = () => {
   const classes = useStyles();
   return (
     <div className={classNames(classes.root)}>
-      <div className={classNames(classes.loading)}>
-        <Icon path={mdiLoading} size={1.5} />
-      </div>
+      <button type='button' className={classNames(css.button, css['is-loading'], css['is-link'], css['is-medium'])}>Loading</button>
     </div>
   );
 };
