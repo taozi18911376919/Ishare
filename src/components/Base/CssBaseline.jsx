@@ -1,8 +1,38 @@
+/* eslint-disable max-len */
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles(({
   '@global': {
+    '@font-face': [
+      {
+        fontFamily: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: 300,
+        src: `
+          local('Roboto Light'),
+          url('/static/fonts/Roboto-Light.ttf') format('trueType')
+        `,
+      },
+      {
+        fontFamily: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: 400,
+        src: `
+          local('Roboto Regular'),
+          url('/static/fonts/Roboto-Regular.ttf') format('trueType')
+        `,
+      },
+      {
+        fontFamily: 'Roboto',
+        fontStyle: 'normal',
+        fontWeight: 700,
+        src: `
+          local('Roboto Bold'),
+          url('/static/fonts/Roboto-Bold.ttf') format('trueType')
+        `,
+      },
+    ],
     /* Make clicks pass-through */
     '#nprogress': {
       pointerEvents: 'none',
@@ -23,11 +53,11 @@ const useStyles = createUseStyles(({
     body: {
       width: '100%',
       margin: 0,
-      minWidth: 1200,
       boxSizing: 'border-box',
       fontSize: 16,
       color: '#2c2c2c',
       backgroundColor: '#ffffff',
+      fontFamily: 'Roboto, "Avenir Next", -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
     },
     main: {
       display: 'block',
@@ -37,8 +67,10 @@ const useStyles = createUseStyles(({
     },
     hr: {
       boxSizing: 'content-box',
-      height: 0,
+      height: 1,
+      backgroundColor: '#cfcfcf',
       overflow: 'visible',
+      margin: [0, 0, 20, 0],
     },
     pre: {
       fontFamily: 'monospace, monospace',

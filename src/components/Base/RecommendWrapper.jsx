@@ -3,38 +3,37 @@ import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
+import css from '@Assets/sass/custom.sass';
+
 import Recommend from '@Components/Base/Recommend';
 
 const useStyles = createUseStyles(({
-  root: {
-    width: '100%',
-    padding: 0,
-    display: 'grid',
-    listStyleType: 'none',
-    gridTemplateColumns: 'repeat(3, 30%)',
-    gridColumnGap: '5%',
+  columns: {
+    flexWrap: 'wrap',
   },
   column: {
-    gridTemplateColumns: 'repeat(2, 47%)',
-    gridColumnGap: '6%',
-  },
-  item: {
-    margin: [0, 0, 48, 0],
+    paddingBottom: 48,
   },
 }), {
   name: 'RecommendWrapper',
 });
 
 const RecommendWrapper = props => {
-  const { data, isShowDesc, column } = props;
+  const { data, isShowDesc } = props;
   const classes = useStyles();
   return (
     <ul
-      className={classNames({ [classes.root]: true, [classes.column]: column })}
+      className={classNames({
+        [classes.columns]: true,
+        [css.columns]: true,
+      })}
     >
       {
         data.map(recommend => (
-          <li className={classNames(classes.item)} key={recommend.get('id')}>
+          <li
+            className={classNames(css.column, css['is-one-third-desktop'], css['is-half-tablet'], classes.column)}
+            key={recommend.get('id')}
+          >
             <Recommend isShowDesc={isShowDesc} data={recommend} />
           </li>
         ))
@@ -46,12 +45,10 @@ const RecommendWrapper = props => {
 RecommendWrapper.propTypes = {
   data: PropTypes.instanceOf(Object).isRequired,
   isShowDesc: PropTypes.bool,
-  column: PropTypes.bool,
 };
 
 RecommendWrapper.defaultProps = {
   isShowDesc: false,
-  column: false,
 };
 
 export default RecommendWrapper;

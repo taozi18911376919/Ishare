@@ -5,7 +5,7 @@ import { setCookie } from 'nookies';
 import AccountAction from './account';
 import UiAction from './ui';
 
-const signup = (params, formikBag) => () => {
+const signup = (params, formikBag) => dispatch => {
   const {
     setSubmitting,
     setFieldError,
@@ -14,11 +14,11 @@ const signup = (params, formikBag) => () => {
     ...params,
   })
     .then(data => {
-      setSubmitting(false);
       setCookie(null, 'token', data.getIn(['user', 'api_token']), {
         path: '/',
         maxAge: 100 * 365 * 24 * 60 * 60,
       });
+      dispatch(UiAction.closeModal());
       Router.push('/account');
     })
     .catch(error => {
@@ -37,7 +37,6 @@ const signin = (params, formikBag) => dispatch => {
     ...params,
   })
     .then(data => {
-      setSubmitting(false);
       setCookie(null, 'token', data.getIn(['user', 'api_token']), {
         path: '/',
         maxAge: 100 * 365 * 24 * 60 * 60,
@@ -45,7 +44,6 @@ const signin = (params, formikBag) => dispatch => {
       if (global.window.location.href.indexOf('/signin') !== -1) {
         Router.push('/account');
       } else {
-        dispatch(AccountAction.fetchUserData({ type: 'TOPIC' }));
         dispatch(UiAction.closeModal());
       }
     })
@@ -69,7 +67,6 @@ const forgetPassword = (params, formikBag) => dispatch => {
     ...params,
   })
     .then(data => {
-      setSubmitting(false);
       setCookie(null, 'token', data.getIn(['user', 'api_token']), {
         path: '/',
         maxAge: 100 * 365 * 24 * 60 * 60,
@@ -78,7 +75,6 @@ const forgetPassword = (params, formikBag) => dispatch => {
         Router.push('/account');
       } else {
         dispatch(UiAction.closeModal());
-        dispatch(AccountAction.fetchUserData({ type: 'TOPIC' }));
       }
     })
     .catch(error => {
@@ -103,7 +99,6 @@ const facebookSign = params => dispatch => NetWork.post(`${Config.apiBaseUrl}/ap
     if (global.window.location.href.indexOf('/signin') !== -1) {
       Router.push('/account');
     } else {
-      dispatch(AccountAction.fetchUserData({ type: 'TOPIC' }));
       dispatch(UiAction.closeModal());
     }
   });

@@ -76,7 +76,7 @@ const Contribute = () => {
   };
 
   const showAddContributeModal = () => {
-    dispatch(UiAction.showModal('addContribute'));
+    dispatch(UiAction.showModal('contribute'));
   };
 
   return (
@@ -88,7 +88,7 @@ const Contribute = () => {
       >
         Add Contribute
       </button>
-      {data && <ContributeWrapper data={data} isColumn={false} />}
+      {data && <ContributeWrapper data={data} />}
       {statusElement()}
     </>
   );

@@ -10,18 +10,17 @@ const useStyles = createUseStyles(({
     fontSize: 24,
     color: '#2c2c2c',
     lineHeight: 1.25,
-    margin: [0, 0, 24, 0],
-    '& small': {
-      lineHeight: 1,
-      padding: [2, 8],
-      backgroundColor: 'rgba(0, 0, 0, .025)',
-      marginLeft: '1em',
-      color: '#929292',
-      fontWeight: 'normal',
-    },
+    margin: [48, 0],
   },
   color: {
     color: '#f5222d',
+  },
+  '@media screen and (max-width: 480px)': {
+    root: {
+      '& span:last-child': {
+        display: 'none',
+      },
+    },
   },
 }), {
   name: 'ModuleTitle',

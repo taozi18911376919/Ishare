@@ -51,7 +51,7 @@ const Favorite = () => {
 
   return (
     <>
-      {data && <RecommendWrapper data={data} isShowDesc column />}
+      {data && <RecommendWrapper data={data} isShowDesc />}
       {statusElement()}
     </>
   );

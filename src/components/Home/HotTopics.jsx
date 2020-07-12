@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
+import classNames from 'classnames';
 
+import css from '@Assets/sass/custom.sass';
 import ModuleTilt from '@Components/Base/ModuleTitle';
 import TopicWrapper from '@Components/Base/TopicWrapper';
 
@@ -26,7 +28,14 @@ const HotTopics = props => {
     <>
       <ModuleTilt color>
         Hot Topics
-        {categoryName && <small>#{categoryName}</small>}
+        {categoryName && (
+          <span
+            className={classNames(css.button, css['is-small'], css['is-light'], css['is-rounded'], css['is-disabled'])}
+            style={{ marginLeft: 4 }}
+          >
+            #{categoryName}
+          </span>
+        )}
       </ModuleTilt>
       <TopicWrapper data={data} />
     </>

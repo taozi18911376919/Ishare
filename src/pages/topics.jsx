@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import { parseCookies } from 'nookies';
+import Head from 'next/head';
+
+import css from '@Assets/sass/custom.sass';
 
 import { Link } from '@Server/routes';
 
-import CenterBlock from '@Components/Base/CenterBlock';
 import ContributeWrapper from '@Components/Base/ContributeWrapper';
 import Loading from '@Components/Base/Loading';
 import ViewMore from '@Components/Base/ViewMore';
@@ -25,8 +27,10 @@ const mutilpellipsis = line => ({
 
 const useStyles = createUseStyles(({
   root: {
+    marginLeft: -24,
+    marginRight: -24,
     backgroundColor: '#ffffff',
-    padding: [24, 0],
+    padding: [32, 0],
     boxShadow: '5px 25px 34px 0px rgba(176,176,176,0.35)',
     marginBottom: 68,
     display: 'flex',
@@ -47,7 +51,6 @@ const useStyles = createUseStyles(({
     margin: [0, 24],
   },
   title: {
-    ...mutilpellipsis(1),
     margin: 0,
     fontSize: 24,
   },
@@ -61,27 +64,25 @@ const useStyles = createUseStyles(({
     justifycontent: 'center',
   },
   control: {
-    outline: 'none',
     width: 160,
     height: 40,
-    lineHeight: '40px',
-    fontSize: 16,
-    border: 0,
-    textAlign: 'center',
-    padding: 0,
-    margin: 0,
-    backgroundColor: '#f5222d',
-    borderRadius: 4,
-    color: '#ffffff',
-    cursor: 'pointer',
     '& + &': {
-      marginTop: 20,
+      marginTop: '16px !important',
       backgroundColor: '#1877f2',
-      '&:disabled': {
-        opacoty: 0.9,
-        ccursor: 'not-allowed',
-        pointerEvents: 'none',
-      },
+    },
+  },
+  '@media screen and (max-width: 768px)': {
+    root: {
+      flexDirection: 'column',
+    },
+    title: {
+      marginTop: 16,
+      marginBottom: 16,
+      textAlign: 'center',
+    },
+    link: {
+      marginBottom: 16,
+      textAlign: 'center',
     },
   },
 }), {
@@ -148,7 +149,7 @@ const TopicsPage = props => {
 
   const handleShowAddContribute = () => {
     if (!user.get('name')) {
-      dispatch(UiAction.showModal('signin'));
+      dispatch(UiAction.showModal('login'));
     } else {
       dispatch(UiAction.showModal('addContribute'));
     }
@@ -156,7 +157,7 @@ const TopicsPage = props => {
 
   const handleChangeFavorate = () => {
     if (!user.get('name')) {
-      dispatch(UiAction.showModal('signin'));
+      dispatch(UiAction.showModal('login'));
     } else {
       setDisabled(true);
       dispatch(TopicAction.favorate({ topic_id: +id, type: Boolean(!topicInfo.get('favorite_status')) }));
@@ -177,16 +178,15 @@ const TopicsPage = props => {
           <div className={classNames(classes.controls)}>
             <button
               type='button'
-              className={classNames(classes.control)}
+              className={classNames(classes.control, css.button, css['is-light'])}
               onClick={handleShowAddContribute}
             >
               Add contribute
             </button>
             <button
               type='button'
-              className={classNames(classes.control)}
+              className={classNames(classes.control, css.button, css['is-dark'], css['is-link'], disabled && css['is-loading'])}
               onClick={handleChangeFavorate}
-              disabled={disabled}
             >
               {topicInfo.get('favorite_status') ? 'Cancel Favorate' : 'Favorate'}
             </button>
@@ -199,13 +199,17 @@ const TopicsPage = props => {
 
   return (
     <>
+      <Head>
+        <title>{topicInfo.get('title')}</title>
+        <meta name='keywords' content={topicInfo.get('seo_keywords')} />
+        <meta name='description' content={topicInfo.get('seo_description')} />
+      </Head>
+
       {createTopicInfo()}
-      <CenterBlock>
-        <>
-          {!!contributes.size && <ContributeWrapper data={data} />}
-          {statusElement()}
-        </>
-      </CenterBlock>
+      <div className={classNames(css.container)}>
+        {!!contributes.size && <ContributeWrapper data={data} half />}
+        {statusElement()}
+      </div>
     </>
   );
 };

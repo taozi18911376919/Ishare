@@ -2,7 +2,6 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import { Link } from '@Server/routes';
 
 const useStyles = createUseStyles(({
 
@@ -65,7 +64,7 @@ const Topic = ({ data }) => {
   const description = data.get('description');
   const pic = data.get('pic');
   return (
-    <Link route={`/topics/${id}`}>
+    <a href={`/topics/${id}`} rel='noopener noreferrer'>
       <div className={classNames(classes.root)}>
         <img
           className={classNames(classes.pic)}
@@ -77,7 +76,7 @@ const Topic = ({ data }) => {
           <p className={classes.description}>{description}</p>
         </div>
       </div>
-    </Link>
+    </a>
   );
 };
 

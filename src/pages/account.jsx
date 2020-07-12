@@ -3,10 +3,12 @@ import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { parseCookies } from 'nookies';
+import { useSelector, shallowEqual } from 'react-redux';
 
 
-import { Link } from '@Server/routes';
-import CenterBlock from '@Components/Base/CenterBlock';
+import css from '@Assets/sass/custom.sass';
+
+import { Link, Router } from '@Server/routes';
 import AccountTopics from '@Components/Account/Topics';
 import AccountContribute from '@Components/Account/Contribute';
 import AccountFavorite from '@Components/Account/Favorite';
@@ -17,7 +19,6 @@ import NotificationIcon from '@Components/Icon/Notification';
 import FavoriteIcon from '@Components/Icon/Favorite';
 
 import AccountAction from '@Actions/account';
-import { useSelector, shallowEqual } from 'react-redux';
 
 const mutilpellipsis = line => ({
   display: '-webkit-box',
@@ -34,10 +35,12 @@ const useStyles = createUseStyles(({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft: -24,
+    marginRight: -24,
   },
   pic: {
-    width: 96,
-    height: 96,
+    width: 68,
+    height: 68,
     objectFit: 'cover',
     borderRadius: '50%',
   },
@@ -60,37 +63,18 @@ const useStyles = createUseStyles(({
     flex: 1,
     display: 'flex',
   },
-  side: {
-    listStyleType: 'none',
-    margin: 0,
-    padding: [24, 0],
-    borderRight: '1px solid #cfcfcf',
-    flexShrink: 0,
+  tabs: {
+    marginTop: 48,
+    marginBottom: '48px !important',
   },
   item: {
-    cursor: 'pointer',
-    padding: [12, 24, 12, 0],
-    margin: [12, 0],
-    flexShrink: 0,
     color: '#FFD666',
-    '& span': {
-      color: '#2c2c2c',
-    },
-    '&:hover span': {
-      color: '#1877f2',
-    },
-    '& svg': {
-      marginRight: '0.5em',
-    },
+    marginRight: 6,
   },
   active: {
     '& span': {
       color: '#1877f2',
     },
-  },
-  main: {
-    flex: 1,
-    padding: [48, 0, 48, 48],
   },
 }), {
   name: 'AccountPage',
@@ -160,28 +144,31 @@ const AccountPage = props => {
   return (
     <>
       {createUserInfo()}
-      <CenterBlock className={classNames(classes.wrapper)}>
-        <ul className={classNames(classes.side)}>
-          {
-            menuData.map(item => (
+      <div className={classNames(css.container)}>
+        <div className={classNames(css.tabs, css['is-medium'], classes.tabs)}>
+          <ul>
+            {menuData.map(item => (
               <Link route={item.href} key={item.label}>
                 <li
                   className={classNames({
-                    [classes.item]: true,
-                    [classes.active]: item.href === (pageType ? `${pathname}/${pageType}` : pathname),
+                    [css['is-active']]: item.href === (pageType ? `${pathname}/${pageType}` : pathname),
                   })}
                 >
-                  {item.icon}
-                  <span>{item.label}</span>
+                  <a>
+                    <span className={classNames(classes.item)}>
+                      {item.icon}
+                    </span>
+                    <span>{item.label}</span>
+                  </a>
                 </li>
               </Link>
-            ))
-          }
-        </ul>
+            ))}
+          </ul>
+        </div>
         <div className={classNames(classes.main)}>
           {createPageElement()}
         </div>
-      </CenterBlock>
+      </div>
     </>
   );
 };
@@ -198,6 +185,18 @@ AccountPage.defaultProps = {
 AccountPage.getInitialProps = async ctx => {
   const { store, query: { pageType }, pathname } = ctx;
   const { token } = parseCookies(ctx);
+
+  if (!token) {
+    if (ctx.isServer) {
+      ctx.res.writeHead(302, {
+        Location: '/login',
+      });
+      ctx.res.end();
+    } else {
+      Router.replace('/login');
+    }
+  }
+
   let type = 'TOPIC';
 
   switch (pageType) {

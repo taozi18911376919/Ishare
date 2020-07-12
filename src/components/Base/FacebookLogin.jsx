@@ -1,65 +1,20 @@
 import React, { useState } from 'react';
 import ReactFacebookLogin from 'react-facebook-login';
-import { createUseStyles } from 'react-jss';
-import { mdiFacebook, mdiLoading } from '@mdi/js';
-import Icon from '@mdi/react';
 import classNames from 'classnames';
+import { useDispatch } from 'react-redux';
+import { createUseStyles } from 'react-jss';
 
+import css from '@Assets/sass/custom.sass';
 
 import Config from '@Config';
 import SignAction from '@Actions/sign';
-import { useDispatch } from 'react-redux';
+
+import FacebookIcon from '@Components/Icon/FacebookIcon';
 
 const useStyles = createUseStyles(({
-  '@global': {
-    '@keyframes loading': {
-      from: {
-        transform: 'rotate(0deg)',
-      },
-      to: {
-        transform: 'rotate(360deg)',
-      },
-    },
-  },
-  root: {
-    backgroundColor: '#1877f2',
-    width: 420,
-    height: 48,
-    borderRadius: 24,
-    outline: 'none',
-    fontSize: 18,
-    color: '#ffffff',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: [0, 'auto'],
-    cursor: 'pointer',
-    border: '2px solid #1877f2',
-    transition: 'all .3s',
-    position: 'relative',
-    '&:hover': {
-      backgroundColor: '#ffffff',
-      color: '#1877f2',
-    },
-    '&:disabled': {
-      pointerEvents: 'none',
-    },
-    '& svg': {
-      marginRight: 10,
-    },
-  },
-  loading: {
-    position: 'absolute',
-    left: -2,
-    top: -2,
-    right: -2,
-    bottom: -2,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.25)',
-    '& svg': {
-      animation: 'loading 1s linear infinite',
+  icon: {
+    '&:first-child:not(:last-child)': {
+      marginRight: '12px !important',
     },
   },
 }), {
@@ -91,13 +46,17 @@ const FacebookLogin = () => {
     <>
       {isLoading ? (
         <button
-          type='button'
-          className={classNames(classes.root)}
-          disabled={isLoading}
+          type='submit'
+          className={classNames({
+            [css.button]: true,
+            [css['is-fullwidth']]: true,
+            [css['is-medium']]: true,
+            [css['is-link']]: true,
+            [css['is-rounded']]: true,
+            [css['is-loading']]: isLoading,
+          })}
         >
-          <span className={classNames(classes.loading)}>
-            <Icon path={mdiLoading} size={1} />
-          </span>
+          Continue With Facebook
         </button>
       ) : (
         <ReactFacebookLogin
@@ -106,9 +65,20 @@ const FacebookLogin = () => {
           onFailure={handleFailure}
           onClick={handleClick}
           cookie={process.env.NODE_ENV === 'production'}
-          cssClass={classes.root}
-          icon={<Icon path={mdiFacebook} size={1.25} />}
-          textButton='Continue With Facebook'
+          cssClass={classNames({
+            [css.button]: true,
+            [css['is-fullwidth']]: true,
+            [css['is-medium']]: true,
+            [css['is-link']]: true,
+            [css['is-rounded']]: true,
+            [css['is-loading']]: isLoading,
+          })}
+          icon={(
+            <span className={classNames(css.icon, classes.icon)}>
+              <FacebookIcon />
+            </span>
+          )}
+          textButton={<span>Continue With Facebook</span>}
         />
       )}
     </>

@@ -3,38 +3,34 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 
+import css from '@Assets/sass/custom.sass';
+
 import Topic from '@Components/Base/Topic';
 
 const useStyles = createUseStyles(({
-  root: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginBottom: 48,
+  columns: {
+    flexWrap: 'wrap',
   },
-  item: {
-    width: '32%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  topicWrapper: {
-    flex: 1,
-    '& + &': {
-      marginTop: 24,
-    },
-  },
-  center: {
-    width: '26%',
-    height: 0,
-    paddingTop: '34.88%',
+  column: {
+    paddingTop: '50%',
     position: 'relative',
   },
-  centerInner: {
+  topicWrapper: {
     position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    display: 'flex',
+    top: 12,
+    right: 12,
+    bottom: 12,
+    left: 12,
+  },
+  '@media screen and (min-width: 769px)': {
+    column: {
+      paddingTop: '24%',
+    },
+  },
+  '@media screen and (min-width: 1024px)': {
+    column: {
+      paddingTop: '18%',
+    },
   },
 }), {
   name: 'TopicWrapper',
@@ -44,40 +40,21 @@ const TopicWrapper = props => {
   const { data } = props;
   const classes = useStyles();
 
-  const createTopicElement = topicIndex => {
-    const topicData = data.get(topicIndex);
-    if (topicData) {
-      return <Topic data={topicData} />;
-    }
-    return <></>;
-  };
-
   return (
-    <div className={classNames(classes.root)}>
-      <div className={classNames(classes.item)}>
-        <div className={classNames(classes.topicWrapper)}>
-          {createTopicElement(0)}
-        </div>
-        <div className={classNames(classes.topicWrapper)}>
-          {createTopicElement(1)}
-        </div>
-      </div>
-      <div className={classNames(classes.item, classes.center)}>
-        <div className={classNames(classes.centerInner)}>
-          <div className={classNames(classes.topicWrapper)}>
-            {createTopicElement(2)}
+    <>
+      <div className={classNames(css.columns, classes.columns)}>
+        {data.map(item => (
+          <div
+            className={classNames(css.column, css['is-one-third-desktop'], css['is-half-tablet'], classes.column)}
+            key={item.get('title')}
+          >
+            <div className={classNames(classes.topicWrapper)}>
+              <Topic data={item} />
+            </div>
           </div>
-        </div>
+        ))}
       </div>
-      <div className={classNames(classes.item)}>
-        <div className={classNames(classes.topicWrapper)}>
-          {createTopicElement(3)}
-        </div>
-        <div className={classNames(classes.topicWrapper)}>
-          {createTopicElement(4)}
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 

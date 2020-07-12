@@ -1,13 +1,18 @@
 import React from 'react';
 import classNames from 'classnames';
-import SignInForm from '@Components/Form/SignInForm';
+import LoginForm from '@Components/Form/LoginForm';
 import { createUseStyles } from 'react-jss';
 import Router from 'next/router';
 import { parseCookies } from 'nookies';
 
+import css from '@Assets/sass/custom.sass';
+
+import { Link } from '@Server/routes';
+
 const useStyles = createUseStyles(({
   root: {
-    width: 560,
+    width: '100%',
+    maxWidth: 560,
     margin: [48, 'auto'],
     flex: 1,
     display: 'flex',
@@ -20,10 +25,24 @@ const useStyles = createUseStyles(({
   },
   wrapper: {
     overflow: 'hidden',
-    padding: [24, 0],
+    padding: [48, 24],
     borderRadius: 6,
     backgroundColor: '#ffffff',
     boxShadow: '0px 6px 30px 0px rgba(0,62,137,0.1)',
+  },
+  text: {
+    paddingTop: 12,
+    '& > p': {
+      lineHeight: 1,
+      margin: [8, 0, 0, 0],
+      color: '#929292',
+    },
+    '& a': {
+      color: '#1877f2',
+      '&:not(:first-child)': {
+        marginLeft: 12,
+      },
+    },
   },
 }), {
   name: 'SignIn',
@@ -34,9 +53,23 @@ const SignInPage = () => {
 
   return (
     <div className={classNames(classes.root)}>
-      <h2 className={classes.title}>Login</h2>
-      <div className={classes.wrapper}>
-        <SignInForm />
+      <h2 className={classNames(css.title, classes.title, css['is-2'])}>Login</h2>
+      <div className={classNames(classes.wrapper)}>
+        <LoginForm>
+          <div className={classNames(classes.text)}>
+            <p>
+              <span>Not registered yet?</span>
+              <Link route='/signup'>
+                <a>Sign Up</a>
+              </Link>
+            </p>
+            <p>
+              <Link route='/resetpassword'>
+                <a>Forgot Password?</a>
+              </Link>
+            </p>
+          </div>
+        </LoginForm>
       </div>
     </div>
   );

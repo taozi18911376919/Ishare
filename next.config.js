@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const fs = require('fs');
 const path = require('path');
+const withSass = require('@zeit/next-sass');
 const Dotenv = require('dotenv');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
@@ -17,7 +18,13 @@ if (isExistENV) {
   });
 }
 
-const nextConfig = withBundleAnalyzer({
+const nextConfig = withBundleAnalyzer(withSass({
+  // css config
+  cssModules: true,
+  cssLoaderOptions: {
+    importLoaders: 1,
+    localIdentName: process.env.NODE_ENV !== 'production' ? '[local]___[hash:base64:4]' : '[hash:base64:8]',
+  },
   useFileSystemPublicRoutes: false,
   poweredByHeader: false,
   pageExtensions: ['jsx', 'js'],
@@ -26,6 +33,6 @@ const nextConfig = withBundleAnalyzer({
     FACEBOOK_APPID: process.env.FACEBOOK_APPID,
     HOST: process.env.HOST,
   },
-});
+}));
 
 module.exports = nextConfig;

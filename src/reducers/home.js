@@ -12,6 +12,15 @@ const data = (state = fromJS({}), { type, payload }) => {
   }
 };
 
+const seoData = (state = fromJS({}), { type, payload }) => {
+  switch (type) {
+    case HomeAction.SEO_SUCCESS:
+      return payload;
+    default:
+      return state;
+  }
+};
+
 const loading = (state = false, action) => {
   switch (action.type) {
     case HomeAction.HOME_REQUEST:
@@ -26,5 +35,6 @@ const loading = (state = false, action) => {
 
 export default combineReducers({
   data,
+  seoData,
   loading,
 });

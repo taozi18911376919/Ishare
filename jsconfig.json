@@ -13,6 +13,7 @@
       "@Config": ["./src/config"],
       "@Utils/*": ["./src/utils/*"],
       "@Actions/*": ["./src/actions/*"],
+      "@Assets/*": ["./src/assets/*"],
       "@Reducers/*": ["./src/reducers/*"]
     }
   }

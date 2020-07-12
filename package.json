@@ -13,6 +13,7 @@
     "@mdi/js": "^5.3.45",
     "@mdi/react": "^1.4.0",
     "axios": "^0.19.2",
+    "bulma": "^0.9.0",
     "classnames": "^2.2.6",
     "cluster": "^0.7.7",
     "color": "^3.1.2",
@@ -45,6 +46,7 @@
   "devDependencies": {
     "@babel/core": "^7.10.2",
     "@next/bundle-analyzer": "^9.4.4",
+    "@zeit/next-sass": "^1.0.1",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-module-resolver": "^4.0.0",
@@ -56,6 +58,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.4",
+    "node-sass": "^4.14.1",
     "redux-devtools-extension": "^2.13.8",
     "webpack": "^4.43.0"
   }

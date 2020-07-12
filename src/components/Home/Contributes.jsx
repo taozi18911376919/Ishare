@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
+import classNames from 'classnames';
+
+import css from '@Assets/sass/custom.sass';
 
 import ModuleTilt from '@Components/Base/ModuleTitle';
 import ContributeWrapper from '@Components/Base/ContributeWrapper';
@@ -31,7 +34,14 @@ const Contributes = props => {
         {/* eslint-disable-next-line max-len */}
         <span style={{ color: '#FFD666', marginRight: 8 }}><ContributeIcon /></span>
         Lastest Contribute
-        {categoryName && <small>#{categoryName}</small>}
+        {categoryName && (
+          <span
+            className={classNames(css.button, css['is-small'], css['is-light'], css['is-rounded'], css['is-disabled'])}
+            style={{ marginLeft: 4 }}
+          >
+            #{categoryName}
+          </span>
+        )}
       </ModuleTilt>
       <ContributeWrapper data={data} />
     </>

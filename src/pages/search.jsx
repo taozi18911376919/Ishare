@@ -4,8 +4,6 @@ import classNames from 'classnames';
 import { createUseStyles } from 'react-jss';
 import { useRouter } from 'next/router';
 
-import CenterBlock from '@Components/Base/CenterBlock';
-
 import SearchTopic from '@Components/Search/Topics';
 import SearchContribute from '@Components/Search/Contribute';
 
@@ -51,9 +49,7 @@ const SearchPage = () => {
           <li className={classNames({ [classes.tabItem]: true, [classes.active]: !pageType })}>Contribute</li>
         </Link>
       </ul>
-      <CenterBlock>
-        { pageType === 'topics' ? <SearchTopic /> : <SearchContribute />}
-      </CenterBlock>
+      { pageType === 'topics' ? <SearchTopic /> : <SearchContribute />}
     </>
   );
 };

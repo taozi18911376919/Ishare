@@ -66,7 +66,7 @@ const Topics = () => {
 
   return (
     <>
-      {data && <RecommendWrapper data={data} isShowDesc column />}
+      {data && <RecommendWrapper data={data} isShowDesc />}
       {statusElement()}
     </>
   );

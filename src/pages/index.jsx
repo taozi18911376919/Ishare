@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
+import classNames from 'classnames';
 
-import CenterBlock from '@Components/Base/CenterBlock';
+import css from '@Assets/sass/custom.sass';
+
 import HomeCategory from '@Components/Home/Category';
 import HomeHotTopics from '@Components/Home/HotTopics';
 import HomeContributes from '@Components/Home/Contributes';
@@ -23,8 +25,8 @@ const HomePage = () => {
   const recommendTopic = homeData.get('recommend_topic');
 
   return (
-    <CenterBlock>
-      <>
+    <>
+      <div className={classNames(css.container)}>
         <HomeCategory
           data={category}
           categoryId={categoryId}
@@ -33,8 +35,8 @@ const HomePage = () => {
         {!!hotTopic.size && <HomeHotTopics data={hotTopic} categoryId={categoryId} />}
         {!!latestContribute.size && <HomeContributes data={latestContribute} categoryId={categoryId} />}
         {!!recommendTopic.size && <HomeRecommendTopics data={recommendTopic} categoryId={categoryId} />}
-      </>
-    </CenterBlock>
+      </div>
+    </>
   );
 };
 

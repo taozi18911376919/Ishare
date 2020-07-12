@@ -65,7 +65,7 @@ const Contribute = () => {
 
   return (
     <>
-      {data && <ContributeWrapper data={data} isColumn={false} />}
+      {data && <ContributeWrapper data={data} isColumn={false} fullWidth />}
       {statusElement()}
     </>
   );

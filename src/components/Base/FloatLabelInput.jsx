@@ -1,10 +1,14 @@
-import React, { forwardRef, useState, useEffect } from 'react';
-import { createUseStyles } from 'react-jss';
+import React, {
+  forwardRef,
+  useState,
+  useEffect,
+} from 'react';
+import { createUseStyles, useTheme } from 'react-jss';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 
-const labelAnimate = 'translateY(-60%) scale(.85)';
+const labelAnimate = 'translateY(-42%) scale(.85)';
 
 const useStyles = createUseStyles(({
   root: {
@@ -14,10 +18,9 @@ const useStyles = createUseStyles(({
     width: '100%',
     borderRadius: 4,
     fontSize: 14,
-    height: 60,
+    height: 50,
     zIndex: 1,
-    padding: [24, 16, 8],
-    outline: 'none',
+    padding: [28, 16, 8],
     color: '#2c2c2c',
     background: '#ffffff',
     border: '1px solid #929292',
@@ -50,6 +53,7 @@ const useStyles = createUseStyles(({
   label: {
     position: 'absolute',
     height: 20,
+    lineHeight: '20px',
     top: '50%',
     marginTop: -10,
     fontSize: 16,
@@ -78,21 +82,17 @@ const useStyles = createUseStyles(({
   name: 'FloatLableInput',
 });
 
-const FloatLabelInput = forwardRef((props, ref) => {
+const CustomFloatLabelInput = forwardRef((props, ref) => {
   const {
     name,
     placeholder,
     hasAddon,
     className: classNameProp,
-    onChange,
     disabled,
     ...resetProps
   } = props;
 
   const [label, setLabel] = useState(placeholder);
-  const [isOnComposition, setIsOnComposition] = useState(false);
-  const [isChromeEvent, setIsChromeEvent] = useState(false);
-
   const classes = useStyles();
 
   useEffect(() => {
@@ -101,27 +101,6 @@ const FloatLabelInput = forwardRef((props, ref) => {
     }
   }, [placeholder]);
 
-  const handleInputChange = event => {
-    if (!isOnComposition) {
-      onChange(event);
-      setIsChromeEvent(true);
-    } else {
-      setIsChromeEvent(false);
-    }
-  };
-
-  const handleComposition = event => {
-    const eventType = event.type;
-    if (eventType === 'compositionstart') {
-      setIsOnComposition(true);
-      setIsChromeEvent(false);
-    } else if (eventType === 'compositionend') {
-      setIsOnComposition(false);
-      if (!isChromeEvent) {
-        handleInputChange(event);
-      }
-    }
-  };
 
   return (
     <div className={classNames(classes.root)}>
@@ -137,31 +116,25 @@ const FloatLabelInput = forwardRef((props, ref) => {
         })}
         ref={ref}
         {...resetProps}
-        onChange={handleInputChange}
-        onCompositionStart={handleComposition}
-        onCompositionUpdate={handleComposition}
-        onCompositionEnd={handleComposition}
       />
       <label htmlFor={name} className={classNames(classes.label)}>{placeholder}</label>
     </div>
   );
 });
 
-FloatLabelInput.defaultProps = {
+CustomFloatLabelInput.defaultProps = {
   placeholder: '',
   hasAddon: false,
   className: '',
-  onChange: () => {},
   disabled: false,
 };
 
-FloatLabelInput.propTypes = {
+CustomFloatLabelInput.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   hasAddon: PropTypes.bool,
   className: PropTypes.string,
-  onChange: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default FloatLabelInput;
+export default CustomFloatLabelInput;

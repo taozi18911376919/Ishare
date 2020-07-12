@@ -29,7 +29,6 @@ const NETWORK_CODE = {
 network.interceptors.response.use(response => {
   if ('data' in response && response.data) {
     const { data, code, message } = response.data;
-    console.log(data);
     if (code === NETWORK_CODE.ERROR_OK) {
       return fromJS(data);
     }

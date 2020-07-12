@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 import netWork from '@Utils/network';
 import Config from '@Config';
@@ -77,10 +77,12 @@ const useStyles = createUseStyles(({
     height: '100%',
     objectFit: 'cover',
     borderRadius: 6,
+    backgroundColor: '#f3f3f3',
   },
   content: {
     lineHeight: 1.4,
     color: '#2c2c2c',
+    flex: 1,
   },
   title: {
     fontSize: 20,
@@ -210,6 +212,33 @@ const useStyles = createUseStyles(({
   paddingTop: {
     paddingTop: 68,
   },
+  '@media screen and (max-width: 768px)': {
+    paddingTop: {
+      paddingTop: 0,
+    },
+    row: {
+      flexDirection: 'column',
+      '& $picWrapper': {
+        width: '100%',
+      },
+      '& $top': {
+        position: 'unset',
+        padding: [12, 0],
+        flexDirection: 'column',
+        '& span': {
+          marginTop: 12,
+        },
+      },
+      '& $title': {
+        marginTop: 12,
+      },
+      '& $desc': {
+        height: 67.2,
+        ...mutilpellipsis(3),
+      },
+    },
+  },
+
 }), {
   name: 'Contribute',
 });
@@ -306,7 +335,7 @@ const Contribute = props => {
         rel='noreferrer'
         onClick={handleOnClickReadNotification}
       >
-        {data.get('from_url')}
+        {data.get('show_url')}
       </a>
       {createdAt && (
         <>
@@ -317,8 +346,7 @@ const Contribute = props => {
     </div>
   );
 
-  const handleReadNotification = topId => {
-    Router.push(`/topics/${topId}`);
+  const handleReadNotification = () => {
     if (router.query.pageType === 'notification') {
       netWork.post(`${Config.apiBaseUrl}/api/v1/notification/read`, {
         notification_id: id,
@@ -337,7 +365,13 @@ const Contribute = props => {
       >
         {data.get('topic_title') && (
           <div className={classNames(classes.top)}>
-            <a onClick={() => handleReadNotification(data.get('topic_id'))}>{data.get('topic_title')}</a>
+            <a
+              onClick={() => handleReadNotification()}
+              href={`/topics/${data.get('topic_id')}`}
+              rel='noopener noreferrer'
+            >
+              {data.get('topic_title')}
+            </a>
             { data.get('topic_updated_time') && <span>Updated: {data.get('topic_updated_time')}</span> }
           </div>
         )}

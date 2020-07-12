@@ -65,7 +65,7 @@ const Topics = () => {
   };
 
   const showAddTopicModal = () => {
-    dispatch(UiAction.showModal('addTopic'));
+    dispatch(UiAction.showModal('topic'));
   };
 
   const statusElement = () => {
@@ -87,7 +87,7 @@ const Topics = () => {
       >
         Add Topic
       </button>
-      {data && <RecommendWrapper data={data} isShowDesc column />}
+      {data && <RecommendWrapper data={data} isShowDesc />}
       {statusElement()}
     </>
   );

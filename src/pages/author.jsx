@@ -3,7 +3,8 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 
-import CenterBlock from '@Components/Base/CenterBlock';
+import css from '@Assets/sass/custom.sass';
+
 import ModuleTilt from '@Components/Base/ModuleTitle';
 import TopicWrapper from '@Components/Base/TopicWrapper';
 import ContributeWrapper from '@Components/Base/ContributeWrapper';
@@ -26,6 +27,8 @@ const useStyles = createUseStyles(({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft: -24,
+    marginRight: -24,
   },
   pic: {
     width: 96,
@@ -69,13 +72,11 @@ const AuthorPage = () => {
     if (authorInfo.size) {
       const avatar = authorInfo.get('avatar');
       const name = authorInfo.get('name');
-      const email = authorInfo.get('email');
       return (
         <div className={classNames(classes.root)}>
           <img src={avatar} alt='' className={classNames(classes.pic)} />
           <div className={classNames(classes.content)}>
             <h2 className={classNames(classes.title)}>{name}</h2>
-            <span className={classNames(classes.link)}>{email}</span>
           </div>
         </div>
       );
@@ -86,7 +87,7 @@ const AuthorPage = () => {
   return (
     <>
       {createAuthorInfo()}
-      <CenterBlock>
+      <div className={classNames(css.container)}>
         <ModuleTilt>
           {authorInfo.get('name')} Topics
         </ModuleTilt>
@@ -95,7 +96,7 @@ const AuthorPage = () => {
           {authorInfo.get('name')} Contributes
         </ModuleTilt>
         <ContributeWrapper data={contributes} />
-      </CenterBlock>
+      </div>
     </>
   );
 };

@@ -1,8 +1,12 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
-import Icon from '@mdi/react';
-import { mdiFacebook, mdiTwitter, mdiGoogle } from '@mdi/js';
+import { useSelector, shallowEqual } from 'react-redux';
+
+import FacebookIcon from '@Components/Icon/FacebookIcon';
+import TwitterIcon from '@Components/Icon/TwitterIcon';
+import GoogleIcon from '@Components/Icon/GoogleIcon';
+
 
 const useStyles = createUseStyles(({
   root: {
@@ -12,15 +16,15 @@ const useStyles = createUseStyles(({
   },
   links: {
     listStyleType: 'none',
-    display: 'flex',
-    justifyContent: 'center',
+    textAlign: 'center',
   },
   linkItem: {
-    fontSize: 18,
+    display: 'inline-block',
     lineHeight: 1.5,
-    margin: [0, 16],
+    margin: [8, 16],
   },
   buttons: {
+    paddingTop: 24,
     display: 'flex',
     justifyContent: 'center',
   },
@@ -44,6 +48,10 @@ const useStyles = createUseStyles(({
 
 const Footer = () => {
   const classes = useStyles();
+  const { seoData } = useSelector(state => ({
+    seoData: state.getIn(['home', 'seoData']),
+  }), shallowEqual);
+
   return (
     <footer className={classNames(classes.root)}>
       <ul className={classNames(classes.links)}>
@@ -53,15 +61,15 @@ const Footer = () => {
         <li className={classNames(classes.linkItem)}>FOLLOW US?</li>
       </ul>
       <div className={classNames(classes.buttons)}>
-        <button className={classNames(classes.button)} type='button'>
-          <Icon path={mdiFacebook} size={1.5} />
-        </button>
-        <button className={classNames(classes.button)} type='button'>
-          <Icon path={mdiTwitter} size={1.5} />
-        </button>
-        <button className={classNames(classes.button)} type='button'>
-          <Icon path={mdiGoogle} size={1.5} />
-        </button>
+        <a className={classNames(classes.button)} href={seoData.get('facebook')} target='_blank' rel='noopener noreferrer'>
+          <FacebookIcon size='36px' />
+        </a>
+        <a className={classNames(classes.button)} href={seoData.get('twitter')} target='_blank' rel='noopener noreferrer'>
+          <TwitterIcon size='36px' />
+        </a>
+        <a className={classNames(classes.button)} href={seoData.get('google')} target='_blank' rel='noopener noreferrer'>
+          <GoogleIcon size='40px' />
+        </a>
       </div>
     </footer>
   );

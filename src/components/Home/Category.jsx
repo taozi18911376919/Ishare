@@ -1,49 +1,14 @@
 import React from 'react';
-import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 
-import HomeAction from '@Actions/home';
+import css from '@Assets/sass/custom.sass';
 
-const useStyles = createUseStyles(({
-  root: {
-    padding: 0,
-    listStyleType: 'none',
-    display: 'flex',
-    flexWrap: 'wrap',
-    margin: [32, 0],
-    justifyContent: 'center',
-  },
-  action: {
-    color: '#2c2c2c',
-    backgroundColor: '#f3f3f3',
-  },
-  item: {
-    fontSize: 16,
-    padding: [4, 12],
-    backgroundColor: 'rgba(0, 0, 0, .015)',
-    borderRadius: 6,
-    cursor: 'pointer',
-    color: '#929292',
-    transition: 'all .3s linear',
-    '& + &': {
-      marginLeft: 12,
-    },
-    '&:hover': {
-      extend: 'action',
-    },
-  },
-  active: {
-    extend: 'action',
-  },
-}), {
-  name: 'Home-Category',
-});
+import HomeAction from '@Actions/home';
 
 const Category = props => {
   const { data, categoryId, onChange } = props;
-  const classes = useStyles();
   const dispatch = useDispatch();
   const homeLoading = useSelector(state => state.getIn(['home', 'loading']), shallowEqual);
 
@@ -56,11 +21,12 @@ const Category = props => {
   };
 
   return (
-    <ul className={classNames(classes.root)}>
+    <ul className={classNames(css.buttons)} style={{ paddingTop: '32px' }}>
       <li
         className={classNames({
-          [classes.item]: true,
-          [classes.active]: !categoryId,
+          [css.button]: true,
+          [css['is-small']]: true,
+          [css['is-light']]: !categoryId,
         })}
         onClick={() => handelChangeCategory(0)}
       >
@@ -73,8 +39,9 @@ const Category = props => {
           <li
             key={name}
             className={classNames({
-              [classes.item]: true,
-              [classes.active]: categoryId === id,
+              [css.button]: true,
+              [css['is-small']]: true,
+              [css['is-light']]: categoryId === id,
             })}
             onClick={() => handelChangeCategory(id)}
           >

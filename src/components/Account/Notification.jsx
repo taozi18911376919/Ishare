@@ -73,7 +73,7 @@ const Notification = () => {
   return (
     <>
       <div className={classNames(classes.root)}><RemindIcon /> {topicUpdateCount} topics was update</div>
-      {data && <ContributeWrapper data={data} isColumn={false} />}
+      {data && <ContributeWrapper data={data} fullWidth isColumn={false} />}
       {statusElement()}
     </>
   );
