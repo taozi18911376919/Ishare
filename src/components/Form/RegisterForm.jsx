@@ -85,7 +85,6 @@ const RegisterForm = ({ children }) => {
       return error;
     },
     onSubmit: (formData, formikBag) => {
-      console.log(formData);
       dispatch(SignAction.signup(formData, formikBag));
     },
     displayName: 'SignUpForm',
