@@ -185,7 +185,7 @@ const TopicsPage = ({ pageType }) => {
   return (
     <>
       <Head>
-        <title>{topicInfo.get('title')} topixin.com</title>
+        <title>{topicInfo.get('title')} - topixin.com</title>
         <meta name='keywords' content={topicInfo.get('seo_keywords')} />
         <meta name='description' content={topicInfo.get('seo_description')} />
       </Head>
