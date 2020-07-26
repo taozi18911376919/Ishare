@@ -134,7 +134,7 @@ const TopicsPage = ({ pageType }) => {
     if (!user.get('name')) {
       dispatch(UiAction.showModal('login'));
     } else {
-      dispatch(UiAction.showModal('addContribute'));
+      dispatch(UiAction.showModal('contribute'));
     }
   };
 

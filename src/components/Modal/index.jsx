@@ -67,7 +67,7 @@ const Modal = () => {
           setTitle('Add Topic');
           break;
         case 'contribute':
-          setTitle('Add Contribute');
+          setTitle('Add Share');
           break;
         default:
           setTitle('');
