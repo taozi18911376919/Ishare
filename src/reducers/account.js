@@ -1,4 +1,5 @@
 import AccountAction from '@Actions/account';
+import SignAction from '@Actions/sign';
 import { fromJS } from 'immutable';
 import { combineReducers } from 'redux-immutable';
 
@@ -6,6 +7,8 @@ const user = (state = fromJS({}), { type, payload }) => {
   switch (type) {
     case AccountAction.ACCOUNT_USERINFO_SUCCESS:
       return payload.get('user_info');
+    case SignAction.LOGIN_SUCCESS:
+      return payload.get('user');
     case AccountAction.ACCOUNT_USERINFO_CLEAR:
       return fromJS({});
     default:

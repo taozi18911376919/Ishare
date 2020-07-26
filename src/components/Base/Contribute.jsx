@@ -367,7 +367,7 @@ const Contribute = props => {
           <div className={classNames(classes.top)}>
             <a
               onClick={() => handleReadNotification()}
-              href={`/topics/${data.get('topic_id')}`}
+              href={`/topics/${data.get('slug')}`}
               rel='noopener noreferrer'
             >
               {data.get('topic_title')}

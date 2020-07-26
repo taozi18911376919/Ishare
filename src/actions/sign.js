@@ -5,6 +5,8 @@ import { setCookie } from 'nookies';
 import AccountAction from './account';
 import UiAction from './ui';
 
+const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+
 const signup = (params, formikBag) => dispatch => {
   const {
     setSubmitting,
@@ -14,6 +16,10 @@ const signup = (params, formikBag) => dispatch => {
     ...params,
   })
     .then(data => {
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: data,
+      });
       setCookie(null, 'token', data.getIn(['user', 'api_token']), {
         path: '/',
         maxAge: 100 * 365 * 24 * 60 * 60,
@@ -37,6 +43,10 @@ const signin = (params, formikBag) => dispatch => {
     ...params,
   })
     .then(data => {
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: data,
+      });
       setCookie(null, 'token', data.getIn(['user', 'api_token']), {
         path: '/',
         maxAge: 100 * 365 * 24 * 60 * 60,
@@ -67,6 +77,10 @@ const forgetPassword = (params, formikBag) => dispatch => {
     ...params,
   })
     .then(data => {
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: data,
+      });
       setCookie(null, 'token', data.getIn(['user', 'api_token']), {
         path: '/',
         maxAge: 100 * 365 * 24 * 60 * 60,
@@ -92,6 +106,10 @@ const facebookSign = params => dispatch => NetWork.post(`${Config.apiBaseUrl}/ap
   ...params,
 })
   .then(data => {
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: data,
+    });
     setCookie(null, 'token', data.getIn(['user', 'api_token']), {
       path: '/',
       maxAge: 100 * 365 * 24 * 60 * 60,
@@ -103,10 +121,14 @@ const facebookSign = params => dispatch => NetWork.post(`${Config.apiBaseUrl}/ap
     }
   });
 
-const twitterSign = params => () => NetWork.post(`${Config.apiBaseUrl}/api/v1/user/twitter-signup`, {
+const twitterSign = params => dispatch => NetWork.post(`${Config.apiBaseUrl}/api/v1/user/twitter-signup`, {
   ...params,
 })
   .then(data => {
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: data,
+    });
     setCookie(null, 'token', data.getIn(['user', 'api_token']), {
       path: '/',
       maxAge: 100 * 365 * 24 * 60 * 60,
@@ -143,4 +165,5 @@ export default {
   facebookSign,
   forgetPassword,
   twitterSign,
+  LOGIN_SUCCESS,
 };

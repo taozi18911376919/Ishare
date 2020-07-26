@@ -61,12 +61,12 @@ const useStyles = createUseStyles(({
 const Recommend = props => {
   const { data, isShowDesc } = props;
   const classes = useStyles();
-  const id = data.get('id');
+  const slug = data.get('slug');
   const pic = data.get('pic');
   const title = data.get('title');
 
   return (
-    <Link route={`/topics/${id}`}>
+    <Link route={`/topics/${slug}`}>
       <div className={classNames(classes.root)}>
         <div className={classNames(classes.picWrapper)}>
           <img className={classNames(classes.pic)} src={pic} alt='' />
