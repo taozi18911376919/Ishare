@@ -27,6 +27,7 @@ const ContributeForm = () => {
   const dispatch = useDispatch();
   const [topicOptions, setTopicOptions] = useState(null);
   const [categoryOptions, setCategoryOptions] = useState(null);
+  const [selectedTopicId, setSelectedTopicId] = useState(null);
   const router = useRouter();
 
   const { categorys, topics } = useSelector(state => ({
@@ -39,9 +40,37 @@ const ContributeForm = () => {
     dispatch(CategoryAction.fetchTopic());
   }, []);
 
+  const {
+    values,
+    handleSubmit,
+    handleChange,
+    isSubmitting,
+    errors: formikErrors,
+    touched,
+    setFieldValue,
+  } = useFormik({
+    initialValues: {
+      title: '',
+      description: '',
+      pic: '',
+      topic_id: selectedTopicId || '',
+      categorys: '',
+      from_url: '',
+    },
+    onSubmit: (formData, formikBag) => {
+      dispatch(AddAction.addContribute(formData, formikBag));
+    },
+    displayName: 'ContributeForm',
+  });
+
   useEffect(() => {
     if (topics.size) {
       const tempTopics = [];
+      if (router.pathname === '/topics') {
+        const id = topics.find(item => item.get('slug') === router.query.pageType).get('id');
+        setFieldValue('topic_id', id);
+        setSelectedTopicId(id);
+      }
       topics.map(item => (
         tempTopics.push({
           value: item.get('id'),
@@ -68,29 +97,6 @@ const ContributeForm = () => {
   const customStyle = {
     control: styles => ({ ...styles, minHeight: 48 }),
   };
-
-  const {
-    values,
-    handleSubmit,
-    handleChange,
-    isSubmitting,
-    errors: formikErrors,
-    touched,
-    setFieldValue,
-  } = useFormik({
-    initialValues: {
-      title: '',
-      description: '',
-      pic: '',
-      topic_id: router.pathname === '/topics' ? router.query.id : '',
-      categorys: '',
-      from_url: '',
-    },
-    onSubmit: (formData, formikBag) => {
-      dispatch(AddAction.addContribute(formData, formikBag));
-    },
-    displayName: 'ContributeForm',
-  });
 
   const showError = field => {
     if (touched[field] && formikErrors[field]) {
@@ -144,7 +150,7 @@ const ContributeForm = () => {
             <div className={classNames(css.control)}>
               {topicOptions && (
                 <ReactSelect
-                  defaultValue={topicOptions.find(option => option.value === +values.topic_id)}
+                  defaultValue={topicOptions.find(option => option.value === selectedTopicId)}
                   isDisabled={router.pathname === '/topics'}
                   options={topicOptions}
                   styles={customStyle}
