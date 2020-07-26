@@ -101,7 +101,7 @@ const RegisterForm = ({ children }) => {
 
   return (
     <>
-      <h3 className={classNames(classes.title)}>ishare</h3>
+      <h3 className={classNames(classes.title)}>Topixin</h3>
       <p className={classNames(classes.subTitle)}>A place to shark konwledge and better understand the world</p>
       <div className={classNames(css.columns)}>
         <div className={classNames(css.column, css['is-10'], css['is-offset-1'])}>
@@ -144,7 +144,21 @@ const RegisterForm = ({ children }) => {
               <div className={classNames(css.control)}>
                 <label className={classNames(css.checkbox, classes.agree)}>
                   <input type='checkbox' name='agree' value={values.agree} onChange={handleChange} />
-                  <span>By Signing up you indicate that you have read and agree to <a>Terms of service</a> and <a>Privacy policy.</a></span>
+                  <span>By Signing up you indicate that you have read and agree to
+                    <a
+                      href='/terms'
+                      target='_blank'
+                    >
+                      Terms of service
+                    </a>
+                    <> and </>
+                    <a
+                      href='/privacy-policy'
+                      target='_blank'
+                    >
+                      Privacy policy.
+                    </a>
+                  </span>
                 </label>
               </div>
               {showError('agree')}

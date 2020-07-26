@@ -59,12 +59,12 @@ const useStyles = createUseStyles(({
 
 const Topic = ({ data }) => {
   const classes = useStyles();
-  const id = data.get('id');
+  const slug = data.get('slug');
   const title = data.get('title');
   const description = data.get('description');
   const pic = data.get('pic');
   return (
-    <a href={`/topics/${id}`} rel='noopener noreferrer'>
+    <a href={`/topics/${slug}`} rel='noopener noreferrer'>
       <div className={classNames(classes.root)}>
         <img
           className={classNames(classes.pic)}

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import css from '@Assets/sass/custom.sass';
 
-import ModuleTilt from '@Components/Base/ModuleTitle';
+import ModuleTilte from '@Components/Base/ModuleTitle';
 import TopicWrapper from '@Components/Base/TopicWrapper';
 import ContributeWrapper from '@Components/Base/ContributeWrapper';
 
@@ -88,13 +88,13 @@ const AuthorPage = () => {
     <>
       {createAuthorInfo()}
       <div className={classNames(css.container)}>
-        <ModuleTilt>
+        <ModuleTilte>
           {authorInfo.get('name')} Topics
-        </ModuleTilt>
+        </ModuleTilte>
         <TopicWrapper data={topics} />
-        <ModuleTilt>
-          {authorInfo.get('name')} Contributes
-        </ModuleTilt>
+        <ModuleTilte>
+          {authorInfo.get('name')} Shares
+        </ModuleTilte>
         <ContributeWrapper data={contributes} />
       </div>
     </>

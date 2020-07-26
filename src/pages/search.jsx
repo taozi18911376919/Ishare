@@ -46,7 +46,7 @@ const SearchPage = () => {
           <li className={classNames({ [classes.tabItem]: true, [classes.active]: pageType === 'topics' })}>Topic</li>
         </Link>
         <Link route='/search'>
-          <li className={classNames({ [classes.tabItem]: true, [classes.active]: !pageType })}>Contribute</li>
+          <li className={classNames({ [classes.tabItem]: true, [classes.active]: !pageType })}>Share</li>
         </Link>
       </ul>
       { pageType === 'topics' ? <SearchTopic /> : <SearchContribute />}

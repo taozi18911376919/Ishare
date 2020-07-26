@@ -81,7 +81,7 @@ const menuData = [
   },
   {
     href: '/account/contributes',
-    label: 'My Contribute',
+    label: 'My Shares',
   },
   {
     href: '/account/favorites',
@@ -194,8 +194,8 @@ const Header = () => {
 
 
   return (
-    <>
-      <nav className={classNames(css.navbar, css['has-shadow'], classes.isSpaced)}>
+    <nav className={classNames(css.navbar, css['has-shadow'], classes.isSpaced)}>
+      <div className={classNames(css.container)}>
         <div className={classNames(css['navbar-brand'])}>
           <a className={classNames(classes.logo, css['navbar-item'])} href='/'>
             <img className={classNames(classes.logoIcon)} src={seoData.get('logo')} alt={seoData.get('name')} />
@@ -240,8 +240,8 @@ const Header = () => {
             { createSignElement() }
           </div>
         </div>
-      </nav>
-    </>
+      </div>
+    </nav>
   );
 };
 

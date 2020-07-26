@@ -30,11 +30,10 @@ const useStyles = createUseStyles(({
     marginLeft: -24,
     marginRight: -24,
     backgroundColor: '#ffffff',
-    padding: [32, 0],
+    padding: [32, 12],
     boxShadow: '5px 25px 34px 0px rgba(176,176,176,0.35)',
     marginBottom: 68,
     display: 'flex',
-    justifyContent: 'center',
     alignItems: 'center',
   },
   pic: {
@@ -61,36 +60,29 @@ const useStyles = createUseStyles(({
   controls: {
     display: 'flex',
     flexDirection: 'column',
-    justifycontent: 'center',
+    justifyContent: 'center',
   },
   control: {
     width: 160,
     height: 40,
     '& + &': {
       marginTop: '16px !important',
-      backgroundColor: '#1877f2',
     },
   },
   '@media screen and (max-width: 768px)': {
-    root: {
-      flexDirection: 'column',
+    content: {
+      flex: 1,
+      marginRight: 0,
     },
-    title: {
-      marginTop: 16,
-      marginBottom: 16,
-      textAlign: 'center',
-    },
-    link: {
-      marginBottom: 16,
-      textAlign: 'center',
+    controls: {
+      display: 'none',
     },
   },
 }), {
   name: 'TopicsPage',
 });
 
-const TopicsPage = props => {
-  const { id } = props;
+const TopicsPage = ({ pageType }) => {
   const [page, setPage] = useState(1);
   const [disabled, setDisabled] = useState(false);
   const dispatch = useDispatch();
@@ -113,10 +105,12 @@ const TopicsPage = props => {
   const lastPage = contributes.get('last_page');
   const pageSize = contributes.get('per_page');
 
+  console.log(topicInfo);
+
   useEffect(() => {
     if (page !== 1) {
       dispatch(TopicAction.fetchTopicData({
-        topic_id: +id,
+        slug: pageType,
         page,
         page_size: pageSize,
       }));
@@ -160,7 +154,7 @@ const TopicsPage = props => {
       dispatch(UiAction.showModal('login'));
     } else {
       setDisabled(true);
-      dispatch(TopicAction.favorate({ topic_id: +id, type: Boolean(!topicInfo.get('favorite_status')) }));
+      dispatch(TopicAction.favorate({ id: topicInfo.get('id'), type: Boolean(!topicInfo.get('favorite_status')) }));
     }
   };
 
@@ -168,28 +162,30 @@ const TopicsPage = props => {
     if (topicInfo.size) {
       return (
         <div className={classNames(classes.root)}>
-          <img src={topicInfo.get('pic')} alt='' className={classNames(classes.pic)} />
-          <div className={classNames(classes.content)}>
-            <h2 className={classNames(classes.title)}>{topicInfo.get('title')}</h2>
-            <Link route={`/author/${topicInfo.get('author_id')}`} passHref>
-              <a className={classNames(classes.link)}>{topicInfo.get('author')}</a>
-            </Link>
-          </div>
-          <div className={classNames(classes.controls)}>
-            <button
-              type='button'
-              className={classNames(classes.control, css.button, css['is-light'])}
-              onClick={handleShowAddContribute}
-            >
-              Add contribute
-            </button>
-            <button
-              type='button'
-              className={classNames(classes.control, css.button, css['is-dark'], css['is-link'], disabled && css['is-loading'])}
-              onClick={handleChangeFavorate}
-            >
-              {topicInfo.get('favorite_status') ? 'Cancel Favorate' : 'Favorate'}
-            </button>
+          <div className={classNames(css.container)} style={{ display: 'flex' }}>
+            <img src={topicInfo.get('pic')} alt='' className={classNames(classes.pic)} />
+            <div className={classNames(classes.content)}>
+              <h2 className={classNames(classes.title)}>{topicInfo.get('title')}</h2>
+              <Link route={`/author/${topicInfo.get('author_id')}`} passHref>
+                <a className={classNames(classes.link)}>{topicInfo.get('author')}</a>
+              </Link>
+            </div>
+            <div className={classNames(classes.controls)}>
+              <button
+                type='button'
+                className={classNames(classes.control, css.button, css['is-text'])}
+                onClick={handleShowAddContribute}
+              >
+                Add Share
+              </button>
+              <button
+                type='button'
+                className={classNames(classes.control, css.button, css['is-text'], disabled && css['is-loading'])}
+                onClick={handleChangeFavorate}
+              >
+                {topicInfo.get('favorite_status') ? 'Cancel Favorate' : 'Favorate'}
+              </button>
+            </div>
           </div>
         </div>
       );
@@ -200,7 +196,7 @@ const TopicsPage = props => {
   return (
     <>
       <Head>
-        <title>{topicInfo.get('title')}</title>
+        <title>{topicInfo.get('title')} topixin.com</title>
         <meta name='keywords' content={topicInfo.get('seo_keywords')} />
         <meta name='description' content={topicInfo.get('seo_description')} />
       </Head>
@@ -215,23 +211,23 @@ const TopicsPage = props => {
 };
 
 TopicsPage.getInitialProps = async ctx => {
-  const { store, query: { id } } = ctx;
+  const { store, query: { pageType } } = ctx;
   const { token } = parseCookies(ctx);
   await store.dispatch(TopicAction.fetchTopicData({
-    topic_id: +id,
+    slug: pageType,
     page: 1,
     page_size: 10,
   }, {
     Authorization: `Bearer ${token}`,
   }));
   return {
-    id,
+    pageType,
     store,
   };
 };
 
 TopicsPage.propTypes = {
-  id: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
 };
 
 export default TopicsPage;

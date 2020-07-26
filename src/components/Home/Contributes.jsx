@@ -33,7 +33,7 @@ const Contributes = props => {
       <ModuleTilt>
         {/* eslint-disable-next-line max-len */}
         <span style={{ color: '#FFD666', marginRight: 8 }}><ContributeIcon /></span>
-        Lastest Contribute
+        Latest Shares
         {categoryName && (
           <span
             className={classNames(css.button, css['is-small'], css['is-light'], css['is-rounded'], css['is-disabled'])}

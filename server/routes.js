@@ -11,7 +11,7 @@ const myRoutes = routes()
   .add('/resetpassword', 'resetpassword')
   .add('/author/:id', 'author')
   .add('/account/:pageType(contributes|favorites|notification)?', 'account')
-  .add('/topics/:id', 'topics')
+  .add('/topics/:pageType', 'topics')
   .add('/search/:pageType(topics)?', 'search');
 
 module.exports = myRoutes;

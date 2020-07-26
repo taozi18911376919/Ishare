@@ -125,7 +125,7 @@ const ForgotPasswordForm = ({ children }) => {
 
   return (
     <>
-      <h3 className={classNames(classes.title)}>ishare</h3>
+      <h3 className={classNames(classes.title)}>Topixin</h3>
       <p className={classNames(classes.subTitle)}>A place to shark konwledge and better understand the world</p>
       <div className={classNames(css.columns)}>
         <div className={classNames(css.column, css['is-10'], css['is-offset-1'])}>

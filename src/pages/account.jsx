@@ -88,7 +88,7 @@ const menuData = [
   },
   {
     href: '/account/contributes',
-    label: 'My Contribute',
+    label: 'My Shares',
     icon: <ContributeIcon />,
   },
   {

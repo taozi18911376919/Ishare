@@ -247,7 +247,7 @@ const ContributeForm = () => {
                   [css['is-loading']]: isSubmitting,
                 })}
               >
-                Add Contribute
+                Add Share
               </button>
             </div>
           </div>

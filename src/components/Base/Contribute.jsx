@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import netWork from '@Utils/network';
 import Config from '@Config';
 import LikeIcon from '@Components/Icon/Like';
-import DisLikeIcon from '@Components/Icon/DisLike';
+// import DisLikeIcon from '@Components/Icon/DisLike';
 
 const mutilpellipsis = line => ({
   display: '-webkit-box',
@@ -257,7 +257,7 @@ const Contribute = props => {
   const [like, setLike] = useState(defaultLike);
   const [dislike, setDislike] = useState(defaultDisLike);
   const [add, setAdd] = useState(false);
-  const [subtract, setSubtract] = useState(false);
+  // const [subtract, setSubtract] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
   const handleChangeLike = type => {
@@ -274,7 +274,7 @@ const Contribute = props => {
           setLike(res);
         }
         if (type === 'DISLIKE') {
-          setSubtract(true);
+          // setSubtract(true);
           setDislike(res);
         }
       }
@@ -293,7 +293,7 @@ const Contribute = props => {
   useEffect(() => {
     if (dislike !== defaultDisLike) {
       setTimeout(() => {
-        setSubtract(false);
+        // setSubtract(false);
       }, 1000);
     }
   }, [dislike]);
@@ -403,7 +403,7 @@ const Contribute = props => {
               </button>
               <span className={classNames(classes.position)}>{like}</span>
             </div>
-            <div className={classNames(classes.control)}>
+            {/* <div className={classNames(classes.control)}>
               <button
                 type='button'
                 className={classNames(classes.control, classes.position)}
@@ -413,7 +413,7 @@ const Contribute = props => {
                 <DisLikeIcon />
               </button>
               <span>-{dislike}</span>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

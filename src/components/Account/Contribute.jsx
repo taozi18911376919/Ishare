@@ -76,7 +76,7 @@ const Contribute = () => {
         className={classNames(css.button, css['is-link'], classes.control)}
         onClick={showAddContributeModal}
       >
-        Add Contribute
+        Add Share
       </button>
       {data && <ContributeWrapper data={data} />}
       {statusElement()}
