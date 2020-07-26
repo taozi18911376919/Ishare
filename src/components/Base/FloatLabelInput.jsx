@@ -3,7 +3,7 @@ import React, {
   useState,
   useEffect,
 } from 'react';
-import { createUseStyles, useTheme } from 'react-jss';
+import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 

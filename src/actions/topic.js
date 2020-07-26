@@ -26,7 +26,7 @@ const clearTopicData = () => dispatch => dispatch({ type: TOPIC_CLEAR });
 
 const favorate = parmas => dispatch => {
   const url = `${Config.apiBaseUrl}/api/v1/topic/${parmas.type ? 'favorite' : 'cancel-favorite'}`;
-  return NetWork.post(url, { topic_id: parmas.topic_id })
+  return NetWork.post(url, { ...parmas })
     .then(() => {
       console.log(parmas.type);
       dispatch({

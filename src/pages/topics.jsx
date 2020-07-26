@@ -154,7 +154,7 @@ const TopicsPage = ({ pageType }) => {
       dispatch(UiAction.showModal('login'));
     } else {
       setDisabled(true);
-      dispatch(TopicAction.favorate({ id: topicInfo.get('id'), type: Boolean(!topicInfo.get('favorite_status')) }));
+      dispatch(TopicAction.favorate({ topic_id: topicInfo.get('id'), type: Boolean(!topicInfo.get('favorite_status')) }));
     }
   };
 
