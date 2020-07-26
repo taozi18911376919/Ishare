@@ -44,8 +44,8 @@ const useStyles = createUseStyles(({
     boxShadow: '0 0 6px rgba(0,0,0,.5)',
   },
   content: {
+    flex: 1,
     flexShrink: 0,
-    maxWidth: 360,
     lineHeight: 1.4,
     margin: [0, 24],
   },
@@ -57,24 +57,15 @@ const useStyles = createUseStyles(({
     color: '#929292',
     ...mutilpellipsis(1),
   },
-  controls: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-  control: {
-    width: 160,
-    height: 40,
-    '& + &': {
-      marginTop: '16px !important',
-    },
+  buttons: {
+    alignSelf: 'flex-end',
   },
   '@media screen and (max-width: 768px)': {
     content: {
       flex: 1,
       marginRight: 0,
     },
-    controls: {
+    buttons: {
       display: 'none',
     },
   },
@@ -104,8 +95,6 @@ const TopicsPage = ({ pageType }) => {
   const currentPage = contributes.get('current_page');
   const lastPage = contributes.get('last_page');
   const pageSize = contributes.get('per_page');
-
-  console.log(topicInfo);
 
   useEffect(() => {
     if (page !== 1) {
@@ -170,17 +159,17 @@ const TopicsPage = ({ pageType }) => {
                 <a className={classNames(classes.link)}>{topicInfo.get('author')}</a>
               </Link>
             </div>
-            <div className={classNames(classes.controls)}>
+            <div className={classNames(css.buttons, classes.buttons)}>
               <button
                 type='button'
-                className={classNames(classes.control, css.button, css['is-text'])}
+                className={classNames(css.button, css['is-text'])}
                 onClick={handleShowAddContribute}
               >
                 Add Share
               </button>
               <button
                 type='button'
-                className={classNames(classes.control, css.button, css['is-text'], disabled && css['is-loading'])}
+                className={classNames(css.button, css['is-text'], disabled && css['is-loading'])}
                 onClick={handleChangeFavorate}
               >
                 {topicInfo.get('favorite_status') ? 'Cancel Favorate' : 'Favorate'}
