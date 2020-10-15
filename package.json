@@ -1,6 +1,7 @@
 {
-  "name": "<% name %>",
-  "version": "<% version %>",
+  "name": "{{name}}",
+  "version": "{{version}}",
+  "description": "{{description}}",
   "main": "server/index.js",
   "license": "MIT",
   "scripts": {
@@ -57,8 +58,10 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.4",
+    {{#if sass}}
     "@zeit/next-sass": "^1.0.1",
     "node-sass": "^4.14.1",
+    {{/if}}
     "redux-devtools-extension": "^2.13.8",
     "webpack": "^4.43.0"
   }
