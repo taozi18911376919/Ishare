@@ -1,6 +1,6 @@
 {
-  "name": "<%= name %>",
-  "version": "<%= version %>",
+  "name": "<% name %>",
+  "version": "<% version %>",
   "main": "server/index.js",
   "license": "MIT",
   "scripts": {
