@@ -60,7 +60,7 @@
     "@zeit/next-sass": "^1.0.1",
     "node-sass": "^4.14.1",
     "redux-devtools-extension": "^2.13.8",
-    "webpack": "^4.43.0"<% if (user) { %>,
+    "webpack": "^4.43.0"<% if (sass) { %>,
     "aaa": "^1.2.0"
     <% } %>
   }
